@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>活动列表</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/>
+    <script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+    <script type="text/javascript" src="__STATIC__/js/index.js" ></script>
+    <style>
+        .p01 i {
+            color: red;
+            font-size: 16px;
+        }
+        .p01 i:first-child{
+            font-size: 14px;
+            text-decoration: line-through;
+            color: #c6c6c6;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <ul class="activity-list">
+        {foreach $products as $p}
+        <li>
+            <a href="/k?id={$p.id}">
+                <div class="img"><img style="max-height:120px;" src="{$p.first_pic}" /></div>
+                <div class="info" id="product{$p.id}">
+                    <div class="tit">{$p.title}</div>
+                    <div class="time">截止日期：{$p.end_time | substr=0,10}</div>
+                    <div>
+
+                        <p class="p01">最低砍购价：
+                            <i>￥{$p.old_price}</i>
+                            <i>￥{$p.low_price}</i>
+                        </p>
+                        <!--<p class="p03">仅剩<i>20</i>份</p>
+                        <span>456543人关注</span>-->
+                    </div>
+                </div>
+            </a>
+        </li>
+            {/foreach}
+    </ul>
+</section>
+{include file="/wx_share" /}
+</body>
+<script>
+    function delete_act(id) {
+        var r=confirm("确认删除该活动");
+        if (r==true)
+        {
+            $.post('/k/shop/product_delete?id=' + id, {}, function(res) {
+                if(res.status == 'ok')
+                    $('#product' + id).remove();
+                else {
+                    alert(res.msg);
+                }
+            });
+        }
+    }
+</script>
+</html>

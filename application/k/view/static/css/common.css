@@ -1,0 +1,208 @@
+/*iphone手机的input的样式问题*/
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+-webkit-appearance: none;
+}
+/*css初始值*/
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td {margin: 0;padding: 0;list-style-type: none;}
+body {margin:0 auto;font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size: 14px;line-height: 180%;color: #000000;padding:0px;min-width:300px;max-width:640px;}
+img { border:0px}
+a{font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color: #000000;text-decoration: none;}
+input[type=number] {    -moz-appearance:textfield;}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {    -webkit-appearance: none;}
+.main{ width:100%; overflow:hidden; margin:0; padding:0;}
+table { border-collapse: collapse; border-spacing: 0; empty-cells: show; font-size: 14px }
+fieldset, img { border: 0 }
+cite, em, s, i, b { font-style: normal }
+input, button, textarea, select { font-size: 14px; }
+body, input, button, textarea, select, option { font-size: normal }
+a, input, textarea { text-decoration: none; outline: 0 }
+li, img, label, input { vertical-align: middle }
+var { font-style: normal }
+ins { text-decoration: none }
+body { 
+	font-size: 20px;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.pa{
+	position: absolute;
+}
+.pr{
+	position: relative;
+}
+.pf{
+	position: fixed;
+}
+.fn-clear{
+	clear: both;
+}
+.fn-clear:after{
+	clear: both;
+	content: " ";
+	display: block;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+.fn-hide{
+	display: none;
+}
+.black{width:100%;height:5px;background: #F2F2F2;}
+/*合并图片css引用*/
+.top_bt,.user_btn,.show_cart{background:url(../images/pub_flow.png) no-repeat;background-size: auto 160px; }
+.menu1,.menu2,.menu3,.menu4,#show_more{background:url(../images/pub_goods.png) no-repeat;background-size: auto 200px;}
+.dingdan_1,.dingdan_2,.dingdan_3,.dingdan_4{background:url(../images/pub_main.png) no-repeat;background-size: auto 450px;}
+.vf_1,.vf_2,.vf_3,.vf_4,.vf_5{background:url(../images/pub_main.png) no-repeat;background-size: auto 400px;}
+/*头部弹出菜单*/
+
+.hid{ display:none;}
+.goods_nav{ width:30%; float:right; right:5px; overflow:hidden; position:fixed;margin-top:25px; z-index:9999999}
+.Triangle{ width:100%; height:20px; }
+.Triangle h2{
+width: 0;height: 0;border-style: solid;border-color: transparent transparent #565553 transparent;border-width: 10px;transition: 0.6s;float:right;
+ margin-right:10px;}
+.goods_nav ul{ width:100%; overflow:hidden;background-color:rgba(46,45,45,0.9);border-radius:2px;}
+.goods_nav li{ width:100%; height:40px; border-bottom:1px solid #959595;}
+.nl5{ background:#2D2D2D}
+.goods_nav li span{display: block;width:25px;height:25px; float:left; margin-top:5px; margin-left:5px;}
+.goods_nav li i{ font-style:normal; color:#f3f1f1; font-size:14px; display:block; float:left; line-height:40px;}
+
+/* 页面头部  */
+.header { width:100%; padding-top:10px;height:45px; background:#F6F6F6;top:0; z-index:9999; border:0; border-bottom:1px solid #CCC; position: fixed; left: 0; top: 0;}
+.h-left{float:left;width:10%; height:45px;}
+.h-right{float:left; width:10%;height:45px;}
+.go-back{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	display: block;
+	width: 45px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+}
+.header-searchbtn{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: block;
+	width: 45px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+}
+.header-btn{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: block;
+	padding: 0 10px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	font-size: 14px;
+	color: #555;
+}
+.go-back i,
+.header-searchbtn i{
+	font-size: 24px;
+	color: #777;
+}
+.web-tit{
+	height: 45px;
+	text-align: center;
+	font-size: 16px;
+	color: #555;
+	line-height: 45px;
+}
+.h-mid { width:70%; height:45px; float:left; text-align:center; color:#333; font-size:16px; line-height:45px; position:relative;font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;}
+.h-mid h6 { color:#333; font-size:16px; font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif; font-weight:normal;}
+/*弹出菜单*/
+.top_bar{float:right; display:block;margin-right:8px; width:40px; height:40px; float:right;}
+#show_more{width:30px; height:20px; float:right;background-position:0 -110px; margin-left:10px; margin-top:10px;}
+.goods_nav{ width:30%; float:right; right:5px; overflow:hidden; position:fixed;margin-top:-20px; z-index:9999999}
+
+/*底部模块*/
+.footer { background-color: #F8F8F8; text-align: center; width:100%; overflow:hidden;height: 50px; position: fixed; left: 0; bottom: 0; border-top:1px solid #CCC;}
+.footer ul{
+	width: 98%;
+	height: 40px;
+	text-align: center;
+	font-size: 0;
+}
+.footer ul li{
+	display: inline-block;
+	width: 25%;
+	height: 40px;
+}
+.footer ul li i{
+	display: block;
+	padding-top: 6px;
+	font-size: 20px;
+	line-height: 24px;
+	color: #999;
+}
+.footer ul li span{
+	display: block;
+	font-size: 14px;
+	line-height: 14px;
+	color: #999;
+}
+.footer ul li.current i{
+	color: #FF536A;
+}
+.footer ul li.current span{
+	color: #FF536A;
+}
+.footer a { display: inline-block; /*padding: 0 1em*/ }
+.footer span { color: #82858A; }
+.footer .gl { color: #c30e0e }
+.footer p { text-align: center; line-height: 20px; }
+.mf_o4 { color: #a2a2a2 ;font-size: 10px;}
+/*返回顶部*/
+.gotop{ display:block; width:40px; height:40px; position:fixed; bottom:70px; right:8px;background-color:rgba(243,241,241,0.5); border:1px solid #CCC; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; }
+.gotop img{ display:block; width:40px; height:40px;}
+
+/*无数据*/
+.nodata-wrap{
+	padding-top: 60px;
+}
+.nodata-wrap img{
+	display: block;
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+	margin: 0 auto;
+}
+.nodata-wrap h2{
+	text-align: center;
+	font-size: 16px;
+	font-weight: normal;
+	color: #666;
+	line-height: 40px;
+}
+.common-btn{
+	display: block;
+	border: 0 none;
+	border-radius: 20px;
+	width: 86%;
+	height: 40px;
+	background: #24d900;
+	color: #fff;
+	text-align: center;
+	line-height: 40px;
+	font-size: 16px;
+	margin: 0 auto;
+}
+.common-btn i{
+	padding-right: 5px;
+}
+
+
+

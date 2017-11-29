@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>砍价</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/>
+	<script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+	<script type="text/javascript" src="__STATIC__/js/index.js" ></script>
+</head>
+<body>
+<section class="main">
+	<!--banner start-->
+	<div class="banner">
+		<img src="{$website.$product.first_pic}" />
+		<div class="crumbs">
+			<span><i>{$join_count}</i>人报名</span>
+			<span><i>{$kan_total_count}</i>人参与</span>
+		</div>
+	</div>
+	<!--banner end-->
+
+	<!--活动名称 start-->
+	<h2 class="goodsname"><i>【{$shop.name}】</i>{$product.title}</h2>
+	<!--活动名称 end-->
+
+	<!--成功减至底价轮播 start-->
+	<div class="bargain-success">
+		<ul>
+			<li><span>张某某</span>于2017/11/23 15:23:08 成功减至底价</li><!--名字最多显示3个字-->
+			<li><span>李某某</span>于2017/11/23 15:23:08 成功减至底价</li><!--名字最多显示3个字-->
+			<li><span>王某</span>于2017/11/23 15:23:08 成功减至底价</li><!--名字最多显示3个字-->
+		</ul>
+	</div>
+	<!--成功减至底价轮播 end-->
+
+	<!--活动结束/开始 start-->
+	<div class="time-wrap">
+		<span>活动</span><i>结束</i><span>倒计时</span>
+		<!--<span>活动</span><i>开始</i><span>倒计时</span>-->
+		<i>38</i><span>天</span>
+		<i>20</i><span>时</span>
+		<i>35</i><span>分</span>
+		<i>18</i><span>秒</span>
+	</div>
+	<!--活动结束/开始  end-->
+	{if $has_join}
+	<!--我参与的砍价页面 start-->
+	<div class="user-bargain">
+		<div class="price-wrap">
+			<div class="fl">
+				<div class="div01">{$his_name}</div>
+				<div class="div02">帮减人数：<span>{$kan_count}</span></div>
+			</div>
+			<div class="fr">
+				<div class="div01">现价：<span>{$price}元</span></div>
+				<div class="div02">原价：<span>{$product['old_price']}元</span></div>
+				<div class="div02">底价：<span>{$product['low_price']}元</span></div>
+			</div>
+			<div class="fn-clear"></div>
+		</div>
+
+		<div class="bargain-btn-wrap">
+			{if !$is_pay}
+				<a href="/k/pay?product_id={$product.id}" class="user-bargain-btn">以{$price}元购买</a>
+				<a href="javascript:void(0)" class="user-bargain-btn share-btn">找人帮我砍</a>
+			{else}
+				<a href="javascript:void(0)" class="user-bargain-btn">已完成购买</a>
+			{/if}
+		</div>
+
+	</div>
+	<!--我参与的砍价页面 end-->
+	{else}
+	<!--用户砍价 start-->
+	<div class="user-bargain">
+		<div class="price-wrap">
+			<div class="fl">
+				<div class="div01">{$his_name}</div>
+				<div class="div02">帮减人数：<span>{$kan_count}</span></div>
+			</div>
+			<div class="fr">
+				<div class="div01">现价：<span id="now_price">{$price}元</span></div>
+				<div class="div02">原价：<span>{$product.old_price}元</span></div>
+				<div class="div02">底价：<span>{$product.low_price}元</span></div>
+			</div>
+			<div class="fn-clear"></div>
+		</div>
+		<a href="javascript:void(0)" class="bargain-btn bargain-pop-btn">我也要参加</a>
+		<div id="kan_btn">
+			{if $is_kan}
+			<a href="javascript:void(0)" class="bargain-btn">已帮忙砍价</a>
+			{else}
+			{if isset($_GET['hisuid']) && !$is_pay && $left gt 0}
+			<a href="javascript:void(0)" class="bargain-btn" onclick="kan()">帮TA砍价</a>
+			{/if}
+			{/if}
+		</div>
+	</div>
+	<!--用户砍价 end-->
+	{/if}
+	<!--商品描述 start-->
+	<div class="content-wrap">
+		<h3 class="content-tit">商品描述</h3>
+		<div class="commodity-num">
+			本期商品<i>{$product.number}</i>份 剩余<i>{$left}</i>份
+		</div>
+		<div class="commodity-info">
+			{$product.desc}
+			{foreach $product['pic'] as $p}
+			<img style="width:100%;" src="{$p}"  />
+			{/foreach}
+		</div>
+	</div>
+	<!--商品描述 end-->
+
+	<!--活动规则 start-->
+	<div class="content-wrap">
+		<h3 class="content-tit">活动规则</h3>
+		<div class="rule-wrap">
+			{$product.rule}
+		</div>
+	</div>
+	<!--活动规则 end-->
+
+	<!--商家介绍 start-->
+	<div class="content-wrap">
+		<h3 class="content-tit">商家介绍</h3>
+		<div class="business-info">
+			<p>店名：{$shop.name}</p>
+			<p>地址：{$shop.address}</p>
+			<p>电话：{$shop.contact}</p>
+			<div class="bargain-btn-wrap">
+				<a href="/k/index/lists?shop_id={$product.uid}" class="user-bargain-btn">查看其他活动</a>
+			</div>
+			<!--<p>营业时间：9：00-次日2：00</p>-->
+		</div>
+		<!--<div class="business-imglist">
+            <img src="__STATIC__/images/temp/data01.jpg"  />
+            <img src="__STATIC__/images/temp/data01.jpg"  />
+            <img src="__STATIC__/images/temp/data01.jpg"  />
+            <img src="__STATIC__/images/temp/data01.jpg"  />
+        </div>-->
+	</div>
+	<!--商家介绍 end-->
+
+	<!--排行榜 start-->
+	<!--<div class="content-wrap">
+        <h3 class="content-tit">排行榜</h3>
+        <div class="rank-tit">
+            <span class="s01">排名</span>
+            <span class="s02">姓名</span>
+            <span class="s03">当前价格</span>
+        </div>
+        <ul class="rank-list">
+            <li>
+                <div class="d01"><span>1</span></div>
+                <div class="d02"><span>马*宝</span></div>
+                <div class="d03"><span>已减至底价</span><span>(2017/11/23 15:23:18)</span></div>
+            </li>
+            <li>
+                <div class="d01"><span>2</span></div>
+                <div class="d02"><span>张*</span></div>
+                <div class="d03"><span>已减至底价</span><span>(2017/11/23 15:23:18)</span></div>
+            </li>
+            <li>
+                <div class="d01"><span>3</span></div>
+                <div class="d02"><span>李*木</span></div>
+                <div class="d03"><span>已减至底价</span><span>(2017/11/23 15:23:18)</span></div>
+            </li>
+        </ul>
+        <div class="fn-clear"></div>
+        <div class="load-more">加载更多</div>
+    </div>-->
+	<!--排行榜 end-->
+</section>
+
+<!--加盟 start-->
+<a href="/k/shop/join" class="join"><i class="fl">我也要制作发布营销活动</i><i class="fr">点击这里</i></a>
+<!--加盟 end-->
+
+<!--找人帮我砍弹出层 start-->
+<div class="share-pop fn-hide">
+	<div class="share-wrap">
+		<h3 class="tit">温馨提示</h3>
+		<p class="share-w">朋友也能帮你哟~</p>
+		<div class="shareinfo-wrap">
+			<div class="share-way">方法：<br />点击上方发送给朋友</div>
+			<div class="share-info">
+				点击上方发送给朋友分享至朋友圈让朋友帮你砍吧
+			</div>
+		</div>
+		<a href="javascript:;" class="share-close-btn">我知道了</a>
+	</div>
+</div>
+<!--找人帮我砍弹出层 end-->
+
+<!--我也要参加弹出层 start-->
+<div class="participate-pop fn-hide">
+	<div class="participate-wrap">
+		<img src="__STATIC__/images/msgimg.jpg" class="participate-img" />
+		<a href="javascript:;" class="participate-close-btn"><img src="__STATIC__/images/btn02.jpg" /></a>
+			<div class="item">
+				<input class="join_name txt" type="text" value="" placeholder="请输入姓名" />
+			</div>
+			<div class="item">
+				<input class="join_mobile txt" type="text" value="" placeholder="请输入手机号" />
+			</div>
+			<div class="item">
+				<input type="button" value="确认提交" class="btn" onclick="join()"/>
+			</div>
+	</div>
+</div>
+{include file="/wx_share" /}
+</body>
+
+<script>
+	function join() {
+        var url = "/k/index/join",
+			data = {
+            	'shop_id': {$shop.id},
+				'product_id': {$product.id},
+				'mobile': $('.join_mobile').val(),
+				'name': $('.join_name').val(),
+			}
+        $.post(url, data, function(res) {
+            if(res.status == 'ok')
+                location.href = '/k/?id={$product.id}&hisuid={$_SESSION["uid"]}';
+            else {
+                alert(res.msg);
+            }
+        });
+
+	}
+
+	{if isset($_GET['hisuid'])}
+    function kan() {
+        var url = "/k/index/kan",
+            data = {
+				'myuid': {$_SESSION['uid']},
+				'hisuid': {$_GET['hisuid']},
+				'product_id': {$product.id},
+    		}
+        $.post(url, data, function(res) {
+            if(res.status == 'ok') {
+                alert(res.left);
+                $('#now_price').html(res.left + "元");
+                $('#kan_btn').html('<a href="javascript:void(0)" class="bargain-btn">已帮忙砍价</a>');
+                alert('成功砍掉'+ res.kan_price + '元')
+            } else {
+                alert(res.msg);
+            }
+        });
+
+    }
+	{/if}
+</script>
+</html>

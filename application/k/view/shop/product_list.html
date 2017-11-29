@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>活动列表</title>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/>
+<script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
+<script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
+<script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+<script type="text/javascript" src="__STATIC__/js/index.js" ></script>
+</head>
+<body>
+	<section>
+		<ul class="activity-list">
+			{foreach $product as $p}
+			<li>
+
+				<div class="info" id="product{$p.id}">
+					<div class="fl">
+						<div class="img"><img style="max-width:200px;max-height:120px;" src="{$p.first_pic}" /></div>
+
+						<div class="tit">{$p.title}</div>
+						<div class="time">截止日期：{$p.end_time}</div>
+						<p class="p01">最低：<i>￥{$p.low_price}</i></p>
+						<p class="p02">原价：<i>￥{$p.old_price}</i></p>
+						<!--<p class="p03">仅剩<i>20</i>份</p>
+						<span>456543人关注</span>-->
+					</div>
+					<div class="fr btn-wrap">
+						<a href="/k/?id={$p.id}" class="btn">活动预览</a>
+						<a href="/k/shop/product_edit?id={$p.id}" class="btn">编辑活动内容</a>
+						{if $p.is_pay}
+						<a href="order_list" class="btn">查看报名人员</a>
+						{else}
+						<a href="tip" class="btn">立即付款</a>
+						{/if}
+						<a onclick="delete_act({$p.id})" class="btn">删除活动</a>
+					</div>
+				</div>
+				</a>
+			{/foreach}
+		</ul>
+	</section>
+	{include file="/wx_share" /}
+</body>
+<script>
+	function delete_act(id) {
+        var r=confirm("确认删除该活动");
+        if (r==true)
+        {
+            $.post('/k/shop/product_delete?id=' + id, {}, function(res) {
+                if(res.status == 'ok')
+                    $('#product' + id).remove();
+                else {
+                    alert(res.msg);
+                }
+            });
+        }
+	}
+</script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>申请加盟</title>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/>
+<script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
+<script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
+<script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+<script type="text/javascript" src="__STATIC__/js/index.js" ></script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<section>
+		<div class="join-hint">
+			本页面为商家活动制作申请入口（非活动报名入口）
+		</div>
+		<div class="join-wrap">
+				<div class="item">
+					<label>商家名称</label>
+					<div class="input-wrap">
+						<input type="text" value="{$name}" placeholder="请输入商家名称" class="name" />
+					</div>
+				</div>
+				<div class="item">
+					<label>店铺地址</label>
+					<div class="input-wrap">
+						<input type="text" value="{$address}" placeholder="请输入店铺地址" class="address" />
+					</div>
+				</div>
+				<div class="item">
+					<label>联系电话</label>
+					<div class="input-wrap">
+						<input type="text" value="{$contact}" placeholder="请输入联系电话" class="contact" />
+					</div>
+				</div>
+				<input type="button" value="提交" class="btn" onclick="submit()"/>
+
+		</div>
+	</section>
+</body>
+
+<script>
+
+	function submit() {
+	    var data = {
+			'name': $('.name').val(),
+			'contact': $('.contact').val(),
+			'address': $('.address').val(),
+		}
+        $.post('/k/shop/join', data, function(res) {
+			if(res.status == 'ok')
+			    location.href = '/k/shop/center';
+			else {
+			    alert(res.msg);
+			}
+		});
+
+	}
+
+</script>
+</html>

@@ -1,0 +1,89 @@
+CREATE TABLE `user` (
+   id int(11) unsigned not null auto_increment,
+   `type` int(4) NOT NULL DEFAULT 0 COMMENT '类型1.商家活动支付 101.用户购买支付',
+   `password` char(32) NOT NULL DEFAULT '' COMMENT '密码',
+   `role` text COMMENT '角色',
+   `nickname` varchar(32) NOT NULL DEFAULT '' COMMENT '微信昵称',
+   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '店铺名称',
+   `contact` varchar(32) NOT NULL DEFAULT '' COMMENT '手机号码',
+   `address` varchar(256) NOT NULL DEFAULT '' COMMENT '店铺地址',
+   `file` varchar(256) NOT NULL DEFAULT '' COMMENT '头像',
+   `subscribe`  int(1) DEFAULT 0 comment '是否订阅',
+   `sex` varchar(2) NOT NULL DEFAULT '' COMMENT '性别',
+
+   `openid` varchar(32) COMMENT 'openid',
+   `oauth` varchar(10)  COMMENT '三方登录APP',
+
+   `reg_time` datetime default CURRENT_TIMESTAMP COMMENT '注册时间',
+   `last_login` varchar(16) COMMENT '上次登录时间',
+   created_time datetime default CURRENT_TIMESTAMP,
+   modified_time datetime default CURRENT_TIMESTAMP,
+   deleted int(4) unsigned default 0,
+   primary key(id)) DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `orders` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `shop_id`  int(10)  not null COMMENT '店铺id',
+  `product_id`  int(10)  not null COMMENT '产品id',
+  `order_sn` varchar(32) NOT NULL,
+  `transaction_id` varchar(32) NOT NULL COMMENT '微信订单号',
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `name` varchar(64) COMMENT '用户名字',
+  `mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `server_name` varchar(255) NOT NULL DEFAULT '' COMMENT '商品名',
+  `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品单价',
+  `low_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最低价格',
+  `goods_num` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品数量',
+  `pay_status` int(4) unsigned NOT NULL DEFAULT '0' COMMENT '支付状态',
+  `pay_name` varchar(120) NOT NULL DEFAULT '' COMMENT '支付方式名称',
+  `order_prom_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '活动优惠金额',
+  `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '应付款金额',
+  `total_amount` decimal(10,2) DEFAULT '0.00' COMMENT '订单总价',
+  `type` int(3) default 0 comment '参考bill type',
+  `is_get` int(3) default 0 comment '参考bill is_get',
+
+  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '下单时间',
+  `pay_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '支付时间',
+  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `deleted` int(4) unsigned DEFAULT '0',
+  primary key(id)) DEFAULT CHARSET=utf8;
+
+
+  //商品表 activity
+  CREATE TABLE `product` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `uid` int(11) not null,
+    `title` varchar(256) not null  COMMENT '活动名称',
+    `number` int(5) not null  COMMENT '数量',
+    `count` int(10)  COMMENT '多少次砍价到达底价',
+    `old_price` decimal(10,2)  COMMENT '原价',
+    `low_price` decimal(10,2) not null  COMMENT '低价',
+    `start_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间',
+    `end_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
+    `desc` text not null  COMMENT '活动描述',
+    `rule` text not null  COMMENT '规则',
+    `first_pic` varchar(128) not null  COMMENT '头图',
+    `pic` text not null  COMMENT '商品列表',
+    `is_pay` int(10) not null default 0   COMMENT '是否付钱',
+    `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+    `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+    `deleted` int(4) unsigned DEFAULT '0',
+    primary key(id)) DEFAULT CHARSET=utf8;
+
+    //砍价表
+    CREATE TABLE `kan` (
+        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+        `myuid`  int(10)  not null COMMENT '我的id',
+        `hisuid`  int(10)  not null COMMENT '他的id',
+        `product_id`  int(10)  not null COMMENT '砍价商品的id',
+
+        `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+        `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+        `deleted` int(4) unsigned DEFAULT '0',
+        primary key(id)) DEFAULT CHARSET=utf8;
+
+
+
+

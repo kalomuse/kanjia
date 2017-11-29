@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{$title}</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link  rel="stylesheet"  href="/public/css/reset.css">
+    <link  rel="stylesheet"  href="/public/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+<h3 style="text-align: center">一元购名单管理</h3>
+    <div style="margin: 0 auto;">
+        <table class="table table-striped">
+            <tr>
+                <td style="text-align: center;">姓名</td>
+                <td>手机</td>
+                <td>品种</td>
+                <td>状态</td>
+            </tr>
+            {foreach $orders as $o}
+            <tr>
+                <td style="text-align: center;">{$o.name}</td>
+                <td>{$o.mobile}</td>
+                <td>{$o.type == '1'? '咖啡糕点': '鸡尾酒'}</td>
+                <td>{$o.is_used? '已消费': '<a style="color:red;" onclick="used(this);" href="#" id="'.$o.id.'">确认消费</a>'}</td>
+            </tr>
+            {/foreach}
+        </table>
+    </div>
+<script src="/public/static/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/public/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    function used(self) {
+        var name = $(self).parents('tr').find('td').eq(0).text();
+        var r=confirm(name + "确认已消费？");
+        if (r==true) {
+            var id = $(self).attr('id');
+            $.post('/{$pre}/admin/used', {id: id}, function (res) {
+                if (res.msg)
+                    alert(res.msg);
+                else
+                    $(self).parents('td').text('已消费');
+            });
+        }
+    }
+</script>
+</body>
+</html>
