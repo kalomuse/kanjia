@@ -140,7 +140,7 @@
     pic = "{$product.pic_str}";
     img_type = '';
     function dian(type, self) {
-        var url = '/base/upload/img?type=' + type + '&id={$product.id}';
+        var url = '/index/upload/img?type=' + type + '&id={$product.id}';
         img_type = type;
         $list = $(self).parent();
         uploader.option('server', url);

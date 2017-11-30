@@ -21,16 +21,22 @@ class Order
         );
         M('orders')->where($query)->update($set);
         $order =  M('orders')->where($query)->find();
-        if($order['type'] == 1) { //所有商品更新为已支付
+        if($order['type'] == 1) {
+            //所有商品更新为已支付
             $query = array(
-                'uid'=> $order['shop_id'],
+                'id'=> $order['shop_id'],
             );
+            $user = M('user')->where($query)->find();
             $set = array(
-                'is_pay' => 1
+                'expire_time' => 0
             );
-            M('product')-> where($query)-> update($set);
-        }
+            if($user['expire_time'] < time())
+                $set['expire_time'] = time() + 14 * 24 * 3600;
+            else
+                $set['expire_time'] += 14 * 24 * 3600;
 
+            M('user')->where($query)->update($set);
+        }
 
     }
 }

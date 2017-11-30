@@ -137,7 +137,7 @@
     pic = '';
     img_type = '';
     function dian(type, self) {
-        var url = '/base/upload/img?type=' + type;
+        var url = '/index/upload/img?type=' + type;
         img_type = type;
         $list = $(self).parent();
         uploader.option('server', url);
@@ -162,10 +162,18 @@
             if(res.status == 'ok') {
                 layer.open({
                     content: '是否继续添加多个商品？'
+					{if $expire}
                     ,btn: ['立即付款', '继续添加']
                     ,yes: function(){
-                        location.href = '/k/shop/tip';
-                    },no: function() {
+                    	location.href = '/k/shop/tip';
+                	}
+					{else}
+					,btn: ['返回商品列表', '继续添加']
+						,yes: function(){
+						location.href = '/k/shop/product_list';
+					}
+					{/if}
+                    ,no: function() {
                         location.reload();
                     }
                 });

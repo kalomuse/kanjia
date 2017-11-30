@@ -1,17 +1,17 @@
 <?php
 namespace app\k\controller;
+use app\k\service\ProdctService;
+
 class Index extends Base
 {
     public function Index()
     {
         $id = I('id', 0);
-        $is_kan = 0;
-        $has_join = 0;
-        $kan_count = 0;
         if($id) {
             $hisuid = I('hisuid', 0);
             $product = M('product')->where('id', $id)->find();
             if($product) {
+                $prodct_service = new ProdctService();
                 $rule= explode("\n", $product['rule']);
                 $product['rule'] = "<p>".implode("</p><p>", $rule). "</p>";
                 $product['pic'] = explode(',', $product['pic']);
@@ -21,6 +21,7 @@ class Index extends Base
 
                 //倒计时
                 $endtime = strtotime($product['end_time']);
+
                 //到底价用户统计
                 $query = array(
                     'low_price' => ['exp', '=order_amount'],
@@ -30,31 +31,17 @@ class Index extends Base
                 $low_order = M('orders')->where($query)->select();
 
                 //判断当前用户是否已加入砍价
-                $query = array(
-                    'product_id' => $id,
-                    'user_id' => $this->uid
-                );
-                $order = M('orders')->where($query)->find();
-                if ($order)
-                    $has_join = 1;
+                $has_join = $prodct_service->has_join($id, $this->uid);
 
                 //判断当前用户是否已砍价
-                if ($hisuid) {
-                    $query = array(
-                        'hisuid' => $hisuid,
-                        'myuid' => $this->uid,
-                    );
-                    $res = M('kan')->where($query)->find();
-                    if ($res)
-                        $is_kan = 1;
+                $is_kan = $prodct_service->has_kan($this->uid, $hisuid);
 
-                    //帮他砍价的人数统计
-                    $query = array(
-                        'hisuid' => $hisuid,
-                        'product_id' => $id
-                    );
-                    $kan_count = M('kan')->where($query)->count();
-                };
+                //帮他砍价的人数统计
+                $kan_count = $prodct_service->kan_count($id, $hisuid);
+
+                //当前已售出的商品数量
+                $count = $prodct_service->sale_count($id);
+                $left = $product['number'] - $count;
 
                 //总砍价人数统计
                 $query = array(
@@ -70,15 +57,6 @@ class Index extends Base
                 $join_count = M('orders')->where($query)->count();
 
 
-                //当前已售出的商品数量
-                $query = array(
-                    'type' => 101,
-                    'product_id' => $id,
-                    'pay_status' => 1
-                );
-                $count = M('orders')->where($query)->count();
-                $left = $product['number'] - $count;
-
                 //当前订单
                 $query = array(
                     'product_id' => $id,
@@ -86,6 +64,9 @@ class Index extends Base
                 );
                 $order = M('orders')->where($query)->find();
 
+                $msg = $prodct_service->check($left, $product, $this->expire);
+
+                $this->assign('msg', $msg);
                 $this->assign('endtime', $endtime);
                 $this->assign('low_order', $low_order);
                 $this->assign('join_count', $join_count);
@@ -131,13 +112,16 @@ class Index extends Base
         if(!$shop_id)
             exit('该店铺不存在');
 
-        $query = array(
-            'uid'=> intval(I('shop_id')),
-            'is_pay'=> 1,
-            'deleted' => 0
-        );
-        $products = M('product')->where($query)->select();
-        $this->assign('products', $products);
+        if($this->expire) { //如果商户没付钱或有效期已过
+            $this->assign('products', []);
+        } else {
+            $query = array(
+                'uid' => intval(I('shop_id')),
+                'deleted' => 0
+            );
+            $products = M('product')->where($query)->select();
+            $this->assign('products', $products);
+        }
 
         $user = M('user')->where('id', $shop_id)->find();
         //微信分享赋值

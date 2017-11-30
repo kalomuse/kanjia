@@ -10,6 +10,7 @@ CREATE TABLE `user` (
    `file` varchar(256) NOT NULL DEFAULT '' COMMENT '头像',
    `subscribe`  int(1) DEFAULT 0 comment '是否订阅',
    `sex` varchar(2) NOT NULL DEFAULT '' COMMENT '性别',
+   `expire_time` int(10) COMMENT '过期时间',
 
    `openid` varchar(32) COMMENT 'openid',
    `oauth` varchar(10)  COMMENT '三方登录APP',
@@ -21,6 +22,7 @@ CREATE TABLE `user` (
    deleted int(4) unsigned default 0,
    primary key(id)) DEFAULT CHARSET=utf8;
 
+alter table user add `expire_time` int(10) COMMENT '过期时间' after `sex`;
 
 CREATE TABLE `orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

@@ -11,6 +11,7 @@ class Base extends Controller
     protected $session;
     protected $uid;
     protected $signPackage;
+    protected $expire;
 
     public function _initialize()
     {
@@ -51,6 +52,11 @@ class Base extends Controller
             $signPackage = $jssdk->GetSignPackage();
             $this->assign('website', $this->get_website());
             $this->signPackage = $signPackage;
+
+            //判断是否过期
+            $user = M('user')->where('id', $this->uid)->find();
+            $this->expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
+            $this->assign('expire', $this->expire);
         } else {
             exit('请在微信中浏览');
         }

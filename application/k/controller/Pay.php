@@ -1,18 +1,21 @@
 <?php
 namespace app\k\controller;
 require_once (PROJECT_PATH.'plugins/payment/weixin/weixin.class.php');
+use app\k\service\ProdctService;
 class Pay extends Base
 {
     public function Index() {
         if(!isset($_SESSION['openid'])) {
             exit('请在微信客户端进行支付');
         }
+
+
         $type = I('type', 0);
 
         $code = '\\weixin';
         $wexin = new $code();
+        $user = M('user')->where('id', $this->uid)->find();
         if($type == 1) {
-            $user = M('user')->where('id', $this->uid)->find();
             $order = array(
                 'type'=> 1,
                 'shop_id' => $this->uid,
@@ -27,10 +30,19 @@ class Pay extends Base
             $go_url = "/k/shop/product_list?from=pay";
             $back_url = "/k/shop/product_list?from=pay";
         } else {
+            //判断产品是否售完，过期，未付款
+            $expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
+            $id = I('product_id', '');
+            $product = M('product')->where('id', $id);
+            $prodct_service = new ProdctService();
+            $msg = $prodct_service->check(null, $product, $expire);
+            if($msg)
+                exit($msg);
+
             $go_url = "/k/?id=".I('product_id')."&hisuid={$this->uid}&from=pay";
             $back_url = "/k/?id=".I('product_id')."&hisuid={$this->uid}&from=pay";
             $query = array(
-                'product_id' => I('product_id', ''),
+                'product_id' => $id,
                 'user_id' => $_SESSION['uid'],
             );
             $order = M('orders')->where($query)->find();

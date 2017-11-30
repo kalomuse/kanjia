@@ -72,7 +72,7 @@
 
 		<div class="bargain-btn-wrap">
 			{if !$is_pay}
-				<a href="/k/pay?product_id={$product.id}" class="user-bargain-btn">以{$price}元购买</a>
+				<a onclick="pay();" class="user-bargain-btn">以{$price}元购买</a>
 				<a href="javascript:void(0)" class="user-bargain-btn share-btn">找人帮我砍</a>
 			{else}
 				<a href="javascript:void(0)" class="user-bargain-btn">已完成购买</a>
@@ -228,16 +228,27 @@
 		var endtime = {$endtime};
         setInterval("leftTimer()", 1000);
 
+        function check() {
+            {if $msg}
+            	alert({$msg});
+            return false;
+			{else}
+				return true;
+            {/if}
+		}
+
 		function leftTimer(){
             var leftTime = endtime - new Date() / 1000;
-            var days = parseInt(leftTime  / 60 / 60 / 24 , 10);
-            var hours = parseInt(leftTime  / 60 / 60 % 24 , 10);
-            var minutes = parseInt(leftTime / 60 % 60, 10);//计算剩余的分钟
-            var seconds = parseInt(leftTime  % 60, 10);//计算剩余的秒数
-            $('.time-wrap i').eq(1).html(checkTime(days));
-            $('.time-wrap i').eq(2).html(checkTime(hours));
-            $('.time-wrap i').eq(3).html(checkTime(minutes));
-            $('.time-wrap i').eq(4).html(checkTime(seconds));
+            if(leftTime > 0) {
+                var days = parseInt(leftTime / 60 / 60 / 24, 10);
+                var hours = parseInt(leftTime / 60 / 60 % 24, 10);
+                var minutes = parseInt(leftTime / 60 % 60, 10);//计算剩余的分钟
+                var seconds = parseInt(leftTime % 60, 10);//计算剩余的秒数
+                $('.time-wrap i').eq(1).html(checkTime(days));
+                $('.time-wrap i').eq(2).html(checkTime(hours));
+                $('.time-wrap i').eq(3).html(checkTime(minutes));
+                $('.time-wrap i').eq(4).html(checkTime(seconds));
+            }
 		}
 		function checkTime(i){ //将0-9的数字前面加上0，例1变为01
 			if(i<10) {
@@ -245,26 +256,34 @@
 			}
 			return i;
 		}
+
+        function pay() {
+            if(!check()) return false;
+			location.href = "/k/pay?product_id={$product.id}";
+        }
+
 		function join() {
-        var url = "/k/index/join",
-			data = {
-            	'shop_id': {$shop.id},
-				'product_id': {$product.id},
-				'mobile': $('.join_mobile').val(),
-				'name': $('.join_name').val(),
-			}
-        $.post(url, data, function(res) {
-            if(res.status == 'ok')
-                location.href = '/k/?id={$product.id}&hisuid={$_SESSION["uid"]}';
-            else {
-                alert(res.msg);
-            }
-        });
+            if(!check()) return false;
+			var url = "/k/index/join",
+				data = {
+					'shop_id': {$shop.id},
+					'product_id': {$product.id},
+					'mobile': $('.join_mobile').val(),
+					'name': $('.join_name').val(),
+				}
+			$.post(url, data, function(res) {
+				if(res.status == 'ok')
+					location.href = '/k/?id={$product.id}&hisuid={$_SESSION["uid"]}';
+				else {
+					alert(res.msg);
+				}
+			});
 
 	}
 
 	{if isset($_GET['hisuid'])}
     function kan() {
+        if(!check()) return false;
         var url = "/k/index/kan",
             data = {
 				'myuid': {$_SESSION['uid']},

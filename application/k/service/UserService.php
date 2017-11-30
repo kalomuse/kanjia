@@ -4,9 +4,7 @@
 namespace app\k\service;
 use think\Model;
 use think\Page;
-use think\db;
-use app\base\service\Jssdk;
-use Util;
+use app\index\service\Jssdk;
 /**
  * 分类逻辑定义
  * Class CatsLogic
