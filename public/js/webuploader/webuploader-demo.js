@@ -28,9 +28,9 @@ uploader.on( 'fileQueued', function( file ) {
     var $li = $(
         '<li><a href="javscript:;"><img/></a></li>'
     ),$img = $li.find('img');
-    if(img_type == 'return_first_pic' || img_type == 'first_pic')
+    if(img_type == 'return_first_pic')
         $list.html( $li );
-    else if(img_type == 'return_pic'||  img_type == 'pic')
+    else if(img_type == 'return_pic')
         $list.append( $li );
 
 

@@ -33,9 +33,13 @@
 	<!--成功减至底价轮播 start-->
 	<div class="bargain-success">
 		<ul>
+
 			<li><span>张某某</span>于2017/11/23 15:23:08 成功减至底价</li><!--名字最多显示3个字-->
 			<li><span>李某某</span>于2017/11/23 15:23:08 成功减至底价</li><!--名字最多显示3个字-->
 			<li><span>王某</span>于2017/11/23 15:23:08 成功减至底价</li><!--名字最多显示3个字-->
+			{foreach $low_order as $o}
+			<li><span>{$o.name}</span>于{$o.modified_time} 成功减至底价</li><!--名字最多显示3个字-->
+			{/foreach}
 		</ul>
 	</div>
 	<!--成功减至底价轮播 end-->
@@ -44,10 +48,10 @@
 	<div class="time-wrap">
 		<span>活动</span><i>结束</i><span>倒计时</span>
 		<!--<span>活动</span><i>开始</i><span>倒计时</span>-->
-		<i>38</i><span>天</span>
-		<i>20</i><span>时</span>
-		<i>35</i><span>分</span>
-		<i>18</i><span>秒</span>
+		<i></i><span>天</span>
+		<i></i><span>时</span>
+		<i></i><span>分</span>
+		<i></i><span>秒</span>
 	</div>
 	<!--活动结束/开始  end-->
 	{if $has_join}
@@ -221,7 +225,27 @@
 </body>
 
 <script>
-	function join() {
+		var endtime = {$endtime};
+        setInterval("leftTimer()", 1000);
+
+		function leftTimer(){
+            var leftTime = endtime - new Date() / 1000;
+            var days = parseInt(leftTime  / 60 / 60 / 24 , 10);
+            var hours = parseInt(leftTime  / 60 / 60 % 24 , 10);
+            var minutes = parseInt(leftTime / 60 % 60, 10);//计算剩余的分钟
+            var seconds = parseInt(leftTime  % 60, 10);//计算剩余的秒数
+            $('.time-wrap i').eq(1).html(checkTime(days));
+            $('.time-wrap i').eq(2).html(checkTime(hours));
+            $('.time-wrap i').eq(3).html(checkTime(minutes));
+            $('.time-wrap i').eq(4).html(checkTime(seconds));
+		}
+		function checkTime(i){ //将0-9的数字前面加上0，例1变为01
+			if(i<10) {
+				i = "0" + i;
+			}
+			return i;
+		}
+		function join() {
         var url = "/k/index/join",
 			data = {
             	'shop_id': {$shop.id},

@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="fn-clear item">
-					<label class="tit">活动商品数量:</label>
+					<label class="tit">活动商品库存:</label>
 					<div class="input-wrap">
 						<input type="text" value="{$product.number}" placeholder="请输入活动商品数量" class="txt-border number" />
 					</div>
@@ -89,7 +89,7 @@
 							<img src="__STATIC__/images/temp/data01.jpg"/>
 							<a href="javascript:;" class="del-btn">X</a><!--删除按钮-->
 						</div>
-						<div class="imgitem addimg-btn" onclick="dian('first_pic', this)"><!--上传商家介绍图按钮样式 -->
+						<div class="imgitem addimg-btn" onclick="dian('return_first_pic', this)"><!--上传商家介绍图按钮样式 -->
 						</div>
 					</div>
 					<div class="fn-clear"></div>
@@ -104,7 +104,7 @@
 					<label class="tit">上传商品图片:</label>
 					<ul class="add-photo-wrap">
 						<!--最多上传6张照片-->
-						<li onclick="dian('pic', this)">
+						<li onclick="dian('return_pic', this)">
 							<a data-state="true" class="file_upload">
 								<img src="/public/img/add_user_photo.jpg" />
 							</a>
@@ -136,8 +136,8 @@
 <script src="/public/js/webuploader/webuploader.min.js"></script>
 <script src="/public/js/webuploader/webuploader-demo.js?v=6"></script>
 <script>
-    first_pic = '';
-    pic = '';
+    first_pic = "{$product.first_pic}";
+    pic = "{$product.pic_str}";
     img_type = '';
     function dian(type, self) {
         var url = '/base/upload/img?type=' + type + '&id={$product.id}';
@@ -155,9 +155,11 @@
             low_price: $('.low_price').val(),
             start_time: $('.start_time').val(),
             end_time: $('.end_time').val(),
+            count: $('.count').val(),
             rule: $('.rule').val(),
             desc: $('.desc').val(),
-            //rule: $('.rule').val(),
+            first_pic: first_pic,
+            pic: pic,
 
         }
         $.post('/k/shop/product_edit?id=' + id, data, function(res) {

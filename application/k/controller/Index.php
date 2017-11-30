@@ -19,6 +19,16 @@ class Index extends Base
                 $shop = M('user')->where('id', $product['uid'])->find();
                 $his = M('user')->where('id', $hisuid)->find();
 
+                //倒计时
+                $endtime = strtotime($product['end_time']);
+                //到底价用户统计
+                $query = array(
+                    'low_price' => ['exp', '=order_amount'],
+                    'type' => 101,
+                    'deleted' => 0,
+                );
+                $low_order = M('orders')->where($query)->select();
+
                 //判断当前用户是否已加入砍价
                 $query = array(
                     'product_id' => $id,
@@ -76,7 +86,8 @@ class Index extends Base
                 );
                 $order = M('orders')->where($query)->find();
 
-
+                $this->assign('endtime', $endtime);
+                $this->assign('low_order', $low_order);
                 $this->assign('join_count', $join_count);
                 $this->assign('kan_total_count', $kan_total_count);
                 $this->assign('kan_count', $kan_count);
@@ -198,7 +209,8 @@ class Index extends Base
         }
 
         $set = array(
-            'order_amount' => $order['order_amount'] - $kan_price
+            'order_amount' => $order['order_amount'] - $kan_price,
+            'modified_time' => date("Y-m-d H:i:s")
         );
         M('orders')->where('user_id', $_POST['hisuid'])->update($set);
         M('kan')->insert($_POST);

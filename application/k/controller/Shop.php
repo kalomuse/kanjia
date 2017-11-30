@@ -68,6 +68,7 @@ class Shop extends Base
     {
         if(IS_GET) {
             $product = M('product')->where('id', I('id'))->find();
+            $product['pic_str'] = $product['pic'];
             $product['pic'] = explode(',', $product['pic']);
             $this->assign('product', $product);
             return $this->fetch();
