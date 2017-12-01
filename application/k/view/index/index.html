@@ -54,7 +54,7 @@
 		<i></i><span>秒</span>
 	</div>
 	<!--活动结束/开始  end-->
-	{if isset($_GET['hisuid']) && $_GET['hisuid'] == $_SESSION['uid'] $has_join}
+	{if isset($_GET['hisuid']) && $_GET['hisuid'] eq  $_SESSION['uid'] && $has_join}
 	<!--我参与的砍价页面 start-->
 	<div class="user-bargain">
 		<div class="price-wrap">
@@ -96,7 +96,9 @@
 			</div>
 			<div class="fn-clear"></div>
 		</div>
+		{if $has_join}
 		<a href="javascript:void(0)" class="bargain-btn bargain-pop-btn">我也要参加</a>
+		{/if}
 		<div id="kan_btn">
 			{if $is_kan}
 			<a href="javascript:void(0)" class="bargain-btn">已帮忙砍价</a>
