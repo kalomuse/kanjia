@@ -25,8 +25,8 @@ class Pay extends Base
                 $set = array(
                     'pay_openid' => $openid
                 );
-                $_SESSION['user']['money_openid'] = $openid;
-                M('user')->where("id={$_SESSION['user']['id']}")->update($set);
+                $_SESSION['user']['pay_openid'] = $openid;
+                M('user')->where("id={$_SESSION['uid']}")->update($set);
             } else {
                 return array('status'=>'fail', 'msg'=> '红包发放只能在微信客服端进行');
             }
