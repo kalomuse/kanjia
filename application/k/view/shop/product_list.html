@@ -14,12 +14,16 @@
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
 <script type="text/javascript" src="__STATIC__/js/index.js" ></script>
 </head>
+<style>
+	.activity-list li {
+		min-height:200px;
+	}
+</style>
 <body>
 	<section>
 		<ul class="activity-list">
 			{foreach $product as $p}
 			<li>
-
 				<div class="info" id="product{$p.id}">
 					<div class="fl">
 						<div class="img"><img style="max-width:200px;max-height:120px;" src="{$p.first_pic}" /></div>
