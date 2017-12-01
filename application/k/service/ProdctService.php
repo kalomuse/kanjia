@@ -22,7 +22,7 @@ class ProdctService extends Model
         $msg = "";
         if($left == 0) {
             $msg = "商品全部卖完啦，看看其他商品吧";
-        } else if(strtotime($product['end_time']) < time()) {
+        } else if(intval(strtotime($product['end_time'])) < intval(time())) {
             $msg = "活动已结束";
         } else if($expire) {
             $msg = "活动尚未开始";
