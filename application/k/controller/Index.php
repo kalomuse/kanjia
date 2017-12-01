@@ -212,4 +212,7 @@ class Index extends Base
             'status'=>'ok',
         ));
     }
+    public function wechat() {
+        return $this->fetch();
+    }
 }

@@ -16,6 +16,22 @@ class Pay extends Base
             exit('请在微信客户端进行支付');
         }
 
+        $user = M('user')->where('id', $_SESSION['uid'])->find();
+        //嘉善圈授权
+        if(!$user['pay_openid']) {
+            if (strstr($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger')) {
+                $this->weixin_config = C('wx_pay');
+                $openid = $this->GetOpenid();
+                $set = array(
+                    'pay_openid' => $openid
+                );
+                $_SESSION['user']['money_openid'] = $openid;
+                M('user')->where("id={$_SESSION['user']['id']}")->update($set);
+            } else {
+                return array('status'=>'fail', 'msg'=> '红包发放只能在微信客服端进行');
+            }
+        }
+
         $type = I('type', 0);
 
         $code = '\\weixin';
@@ -33,7 +49,7 @@ class Pay extends Base
                 'total_amount' => C('money'),
             );
             M('orders')->insert($order);
-            $go_url = "/k/shop/product_list?from=pay";
+            $go_url = "/k/index/wechat?from=pay";
             $back_url = "/k/shop/product_list?from=pay";
         } else {
             //判断产品是否售完，过期，未付款

@@ -13,6 +13,7 @@ CREATE TABLE `user` (
    `expire_time` int(10) COMMENT '过期时间',
 
    `openid` varchar(32) COMMENT 'openid',
+   `pay_openid` varchar(32) COMMENT '支付的openid';
    `oauth` varchar(10)  COMMENT '三方登录APP',
 
    `reg_time` datetime default CURRENT_TIMESTAMP COMMENT '注册时间',
@@ -23,6 +24,8 @@ CREATE TABLE `user` (
    primary key(id)) DEFAULT CHARSET=utf8;
 
 alter table user add `expire_time` int(10) COMMENT '过期时间' after `sex`;
+alter table user add `pay_openid` varchar(32) COMMENT '支付的openid' after `openid`;
+
 
 CREATE TABLE `orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

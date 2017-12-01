@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>关 注</title>
+    <link  rel="stylesheet"  href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/common.css" />
+<style>
+    .ka-container {
+        text-align: center;
+        padding-top:100px;
+    }
+    .ka-line {
+        width: 250px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+    .ka-container img {
+        display: block;
+        width: 250px;
+        height: 250px;
+    }
+    .ka-container button {
+        border-radius: 5px;
+        background-color: #FF2233;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        width: 70%;
+        margin-top:20px;
+        margin-left: 15%;
+        border: none;
+        font-family: 微软雅黑;
+        display: block;
+    }
+    .code {
+        width: 280px;
+        word-wrap: break-word;
+        word-break: normal;
+        margin: 0 auto;
+        margin-top:50px;
+        font-size: 14px;
+    }
+</style>
+<body>
+<div class="ka-container">
+    <h4 style="color:#666;">
+        长按关注<span style="color:#ff536a">商家小应用</span>
+    </h4>
+    <div class="ka-line"><img src='__STATIC__/images/wechat.jpg' /></div>
+</div>
+<div class="code">
+
+</div>
+<script>
+    {if isset($_GET['from']) && $_GET['from']== 'pay'}
+        alert('支付成功，请关注下公众号方便进入商户平台查看活动详情');
+    {/if}
+</script>
+</body>
+
+</html>
