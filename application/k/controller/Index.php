@@ -34,7 +34,7 @@ class Index extends Base
                 $has_join = $prodct_service->has_join($id, $this->uid);
 
                 //判断当前用户是否已砍价
-                $is_kan = $prodct_service->has_kan($this->uid, $hisuid);
+                $is_kan = $prodct_service->has_kan($id, $this->uid, $hisuid);
 
                 //帮他砍价的人数统计
                 $kan_count = $prodct_service->kan_count($id, $hisuid);

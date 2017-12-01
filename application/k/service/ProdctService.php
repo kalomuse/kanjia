@@ -61,12 +61,13 @@ class ProdctService extends Model
     /*
     * 判断当前用户是否已加入砍价
     */
-    public function has_kan($uid, $hisuid) {
+    public function has_kan($id, $uid, $hisuid) {
         $is_kan = 0;
         if ($hisuid) {
             $query = array(
                 'hisuid' => $hisuid,
                 'myuid' => $uid,
+                'product_id'=> $id
             );
             $res = M('kan')->where($query)->find();
             if ($res)
