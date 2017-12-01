@@ -55,7 +55,7 @@ class Base extends Controller
 
             //判断是否过期
             $user = M('user')->where('id', $this->uid)->find();
-            $this->expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
+            $this->expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
             $this->assign('expire', $this->expire);
         } else {
             exit('请在微信中浏览');

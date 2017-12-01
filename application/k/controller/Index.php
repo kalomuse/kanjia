@@ -109,11 +109,13 @@ class Index extends Base
     public function lists()
     {
         $shop_id = I('shop_id', 0);
+        $products = [];
+
         if(!$shop_id)
             exit('该店铺不存在');
 
         if($this->expire) { //如果商户没付钱或有效期已过
-            $this->assign('products', []);
+            $this->assign('products', $products);
         } else {
             $query = array(
                 'uid' => intval(I('shop_id')),
