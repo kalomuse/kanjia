@@ -39,7 +39,7 @@ class Pay extends Base
             //判断产品是否售完，过期，未付款
             $expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
             $id = I('product_id', '');
-            $product = M('product')->where('id', $id);
+            $product = M('product')->where('id', $id)->find();
             $prodct_service = new ProdctService();
             $msg = $prodct_service->check(null, $product, $expire);
             if($msg)
