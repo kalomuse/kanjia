@@ -54,7 +54,7 @@
 		<i></i><span>秒</span>
 	</div>
 	<!--活动结束/开始  end-->
-	{if $has_join}
+	{if isset($_GET['hisuid']) && $_GET['hisuid'] == $_SESSION['uid'] $has_join}
 	<!--我参与的砍价页面 start-->
 	<div class="user-bargain">
 		<div class="price-wrap">
@@ -292,8 +292,7 @@
     		}
         $.post(url, data, function(res) {
             if(res.status == 'ok') {
-                alert(res.left);
-                $('#now_price').html(res.left + "元");
+                $('#now_price').html(res.left.toFixed(2) + "元");
                 $('#kan_btn').html('<a href="javascript:void(0)" class="bargain-btn">已帮忙砍价</a>');
                 alert('成功砍掉'+ res.kan_price + '元')
             } else {
