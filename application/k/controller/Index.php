@@ -64,7 +64,10 @@ class Index extends Base
                 );
                 $order = M('orders')->where($query)->find();
 
-                $msg = $prodct_service->check($left, $product, $this->expire);
+                $user = M('user')->where('id', $product['uid'])->find();
+                $expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
+                $this->assign('expire', $expire);
+                $msg = $prodct_service->check($left, $product, $expire);
 
                 $this->assign('msg', $msg);
                 $this->assign('endtime', $endtime);
@@ -110,15 +113,18 @@ class Index extends Base
     {
         $shop_id = I('shop_id', 0);
         $products = [];
-
         if(!$shop_id)
-            exit('该店铺不存在');
+            exit('店铺不存在');
 
-        if($this->expire) { //如果商户没付钱或有效期已过
+        $user = M('user')->where('id',  $shop_id)->find();
+        $expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
+        $this->assign('expire', $expire);
+
+        if($expire) { //如果商户没付钱或有效期已过
             $this->assign('products', $products);
         } else {
             $query = array(
-                'uid' => intval(I('shop_id')),
+                'uid' => $shop_id,
                 'deleted' => 0
             );
             $products = M('product')->where($query)->select();

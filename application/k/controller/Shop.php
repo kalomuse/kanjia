@@ -4,6 +4,14 @@ use app\k\validate\UserValidate;
 use app\k\validate\ProductValidate;
 class Shop extends Base
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $user = M('user')->where('id', $this->uid)->find();
+        $this->expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
+        $this->assign('expire', $this->expire);
+    }
+
     public function Join()
     {
         if(IS_GET) {

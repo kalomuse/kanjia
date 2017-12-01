@@ -4,11 +4,17 @@ require_once (PROJECT_PATH.'plugins/payment/weixin/weixin.class.php');
 use app\k\service\ProdctService;
 class Pay extends Base
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $user = M('user')->where('id', $this->uid)->find();
+        $this->expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
+        $this->assign('expire', $this->expire);
+    }
     public function Index() {
         if(!isset($_SESSION['openid'])) {
             exit('请在微信客户端进行支付');
         }
-
 
         $type = I('type', 0);
 
