@@ -27,7 +27,6 @@ class Shop extends Base
     public function whynot()
     {
         $id = I('id');
-        $name = I('name');
         $content = I('content');
         $query = array(
             'id' => $id,
@@ -36,6 +35,11 @@ class Shop extends Base
             'reason' => $content
         );
         M('user')->where($query)->update($set);
+        return $this->ajaxReturn(
+            array(
+                'status' => 'ok',
+            )
+        );
     }
 
     public function review() {
@@ -58,13 +62,15 @@ class Shop extends Base
 
     public function ajax_cell()
     {
-        exit();
+        $this->tableService->update_cell();
+        return true;
 
     }
 
     public function ajax_edit()
     {
-        exit();
+        $data = $this->tableService->edit();
+        return $this->ajaxReturn($data);
 
     }
 

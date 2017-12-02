@@ -38,8 +38,9 @@
 <!-- Page-Level Scripts -->
 <script>
     function gg(self) {
-        var id = $(self).parents('tr').attr('id'),
         is_init = 1;
+        var id = $(self).parents('tr').attr('id');
+
         $('#whynot').attr('attr-id', id);
     }
     function dd(event) {
@@ -52,7 +53,7 @@
             id : $('#whynot').attr('attr-id'),
             name : $('#whynot').attr('attr-name'),
         };
-        $.post('/admin/user/whynot', data, function(res) {
+        $.post('/admin/shop/whynot', data, function(res) {
             if(res.status == 'ok') {
                 $('#whynot .content').val('');
                 $('#whynot').modal('toggle');
@@ -63,7 +64,8 @@
     }
 
     $(document).ready(function () {
-        var id = "table_list_2", is_init = 0;
+        is_init = 0;
+        var id = "table_list_2";
         $grid = $("#table_list_2");
 
         var config = [

@@ -40,6 +40,14 @@ class TableService
         unset($_POST['oper']);
         $id = $_POST['id'];
         unset($_POST['id']);
+        if(isset($_POST['review']) && $_POST['review'] == 2) {
+            $user = M('user')->where('id', $id)->find();
+            if($user['expire_time'] < time()) {
+                $_POST['expire_time'] = time() + 14 * 24 * 3600;
+            } else {
+                $_POST['expire_time'] += 14 * 24 * 3600;
+            }
+        }
         M($this->table)->where("id", $id)->update($_POST);
         return true;
     }
