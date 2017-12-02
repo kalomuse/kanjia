@@ -99,7 +99,8 @@ class weixin extends Model
         //①、获取用户openid
         $tools = new JsApiPay();
         //$openId = $tools->GetOpenid();
-        $openId = $_SESSION['openid'];
+        $user = M('user')->where('id', $_SESSION['uid'])->find();
+        $openId = $user['pay_openid'];
         //②、统一下单
         $input = new WxPayUnifiedOrder();
         $input->SetBody("支付订单：".$order['order_sn']);
