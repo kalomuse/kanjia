@@ -27,7 +27,7 @@ class Order
                 'id'=> $order['shop_id'],
             );
             $set = array(
-                `review`=> 1,
+                'review'=> 1,
                 'is_pay' => 1,
                 'expire_time' => 0
             );
