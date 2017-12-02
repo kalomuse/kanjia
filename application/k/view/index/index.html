@@ -77,7 +77,7 @@
 		<i></i><span>秒</span>
 	</div>
 	<!--活动结束/开始  end-->
-	{if isset($_GET['hisuid']) && $_GET['hisuid'] eq  $_SESSION['uid'] && $has_join}
+	{if !isset($_GET['hisuid']) || isset($_GET['hisuid']) && $_GET['hisuid'] eq  $_SESSION['uid'] && $has_join}
 	<!--我参与的砍价页面 start-->
 	<div class="user-bargain">
 		<div class="price-wrap">
