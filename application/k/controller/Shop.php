@@ -11,6 +11,9 @@ class Shop extends Base
         $this->expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
         $this->assign('expire', $this->expire);
     }
+    public function pack() {
+        return $this->fetch();
+    }
 
     public function Join()
     {

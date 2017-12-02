@@ -142,6 +142,10 @@ class Index extends Base
         return $this->fetch();
     }
 
+    public function tousu() {
+        return $this->fetch();
+    }
+
     public function join() {
         $t = time();
         $rand = rand(1000, 9999);
