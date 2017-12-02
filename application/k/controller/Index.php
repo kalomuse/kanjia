@@ -172,16 +172,6 @@ class Index extends Base
     }
     public function kan() {
         $product = M('product')->where('id', $_POST['product_id'])->find();
-        //产品总数
-        $count = $product['count'];
-        //已卖出的数量
-        $query = array(
-            'type' => 101,
-            'pay_status' => 1,
-            'product_id' => $_POST['product_id'],
-        );
-        $left = $count - M('orders')->where($query)->count();
-
 
         $query = array(
             'user_id'=> $_POST['hisuid'],
@@ -190,6 +180,12 @@ class Index extends Base
         $order = M('orders')->where($query)->find();
         if(!$order)
             return $this->ajaxReturn('该用户未参与砍价活动');
+        $query = array(
+            'hisuid'=> $_POST['hisuid'],
+            'product_id'=> $_POST['product_id']
+        ) ;
+        $count = M('kan')->where($query)->count();
+        $left = $product['number'] - $count;
 
         if($left > 1) {
             $rand = rand(2, 18) / 10;
