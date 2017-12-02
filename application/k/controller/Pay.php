@@ -37,8 +37,8 @@ class Pay
 
         $code = '\\weixin';
         $wexin = new $code();
-        $user = M('user')->where('id', $_SESSION['uid'])->find();
         if($type == 1) {
+            $user = M('user')->where('id', $_SESSION['uid'])->find();
             $order = array(
                 'type'=> 1,
                 'shop_id' => $_SESSION['uid'],
@@ -53,6 +53,7 @@ class Pay
             $go_url = "/k/index/wechat?from=pay";
             $back_url = "/k/shop/product_list?from=pay";
         } else {
+            $user = M('user')->where('id', $_SESSION['uid'])->find();
             //判断产品是否售完，过期，未付款
             $expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
             $id = I('product_id', '');
@@ -62,8 +63,8 @@ class Pay
             if($msg)
                 exit($msg);
 
-            $go_url = "/k/?id=".I('product_id')."&hisuid={$this->uid}&from=pay";
-            $back_url = "/k/?id=".I('product_id')."&hisuid={$this->uid}&from=pay";
+            $go_url = "/k/?id=".I('product_id')."&hisuid={$_SESSION['uid']}&from=pay";
+            $back_url = "/k/?id=".I('product_id')."&hisuid={$_SESSION['uid']}&from=pay";
             $query = array(
                 'product_id' => $id,
                 'user_id' => $_SESSION['uid'],
