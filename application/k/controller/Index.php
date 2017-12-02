@@ -185,20 +185,21 @@ class Index extends Base
             'product_id'=> $_POST['product_id']
         ) ;
         $count = M('kan')->where($query)->count();
-        $left = $product['number'] - $count;
+        $left = $product['count'] - $count;
 
-        if($left > 1) {
+        if($left > 1 && $order['order_amount']  > $order['low_price']) {
             $rand = rand(2, 18) / 10;
             $kan_price = ($order['order_amount'] - $order['low_price']) / $left * $rand;  //每次抢购的价格=剩余可砍的价格/剩余人数
             $kan_price = round($kan_price,2);
             if ($kan_price < 0.01) {
                 $kan_price = 0.01;
             }
-        } else if($left == 1){
+        } else if($left == 1 && $order['order_amount']  > $order['low_price']){
             $kan_price = $order['order_amount'] - $order['low_price'];
-        } else if($left < 1) {
+        } else if($left < 1 || $order['order_amount']  == $order['low_price']) {
             return $this->ajaxReturn('已到底价');
         }
+
 
         $set = array(
             'order_amount' => $order['order_amount'] - $kan_price,
