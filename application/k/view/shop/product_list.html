@@ -38,7 +38,7 @@
 					<div class="fr btn-wrap">
 						<a href="/k/?id={$p.id}" class="btn">活动预览</a>
 						<a href="/k/shop/product_edit?id={$p.id}" class="btn">编辑活动内容</a>
-						{if !$is_pay}
+						{if $is_pay}
 						<a href="order_list" class="btn">查看报名人员</a>
 						{else}
 						<a href="tip" class="btn">立即付款</a>
