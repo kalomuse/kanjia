@@ -51,12 +51,18 @@ class Base extends Controller
             $this->session = $_SESSION['openid'];
             $jssdk = new \app\index\service\Jssdk($this->weixin_config['appid'], $this->weixin_config['appsecret']);
             $signPackage = $jssdk->GetSignPackage();
+            $this->assign('is_admin', 0);
             $this->assign('website', $this->get_website());
             $this->signPackage = $signPackage;
 
 
         } else {
-            exit('请在微信中浏览');
+            if(isset($_SESSION['admin'])) {
+                $this->assign('website', $this->get_website());
+                $this->assign('is_admin', 1);
+            } else {
+                exit('请在微信中浏览');
+            }
         }
 
     }

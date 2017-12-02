@@ -223,7 +223,9 @@
 			</div>
 	</div>
 </div>
+{if !$is_admin}
 {include file="/wx_share" /}
+{/if}
 </body>
 
 <script>
@@ -275,7 +277,7 @@
 				}
 			$.post(url, data, function(res) {
 				if(res.status == 'ok')
-					location.href = '/k/?id={$product.id}&hisuid={$_SESSION["uid"]}';
+					location.href = '/k/?id={$product.id}&hisuid={isset($_SESSION["uid"])?$_SESSION["uid"]: ""}';
 				else {
 					alert(res.msg);
 				}

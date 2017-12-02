@@ -11,6 +11,10 @@ CREATE TABLE `user` (
    `subscribe`  int(1) DEFAULT 0 comment '是否订阅',
    `sex` varchar(2) NOT NULL DEFAULT '' COMMENT '性别',
    `expire_time` int(10) COMMENT '过期时间',
+   `is_pay` int(3) default 0  COMMENT '是否支付:0没，1：有',
+   `review` int(3) default 0  COMMENT '是否通过审核,0:未提交审核, 1：审核中,2:审核通过,3审核不通过',
+   `reason` varchar(256) default 0 COMMENT '不通过理由',
+
 
    `openid` varchar(32) COMMENT 'openid',
    `pay_openid` varchar(32) COMMENT '支付的openid';
@@ -24,7 +28,10 @@ CREATE TABLE `user` (
    primary key(id)) DEFAULT CHARSET=utf8;
 
 alter table user add `expire_time` int(10) COMMENT '过期时间' after `sex`;
+alter table user add `is_pay` int(3) default 0  COMMENT '是否支付:0没，1：有';
 alter table user add `pay_openid` varchar(32) COMMENT '支付的openid' after `openid`;
+alter table user add `review` int(3) default 0  COMMENT '是否通过审核,0:未提交审核, 1：审核中,2:审核通过,3审核不通过';
+alter table user add `reason` varchar(256) default 0 COMMENT '不通过理由';
 
 
 CREATE TABLE `orders` (

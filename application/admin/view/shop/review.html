@@ -1,0 +1,106 @@
+<style>
+    #edit_table_list_2 {
+        display: none;
+    }
+</style>
+<!-- jqgrid-->
+<link href="/public/css/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="jqGrid_wrapper">
+                <table id="table_list_2"></table>
+                <div id="pager_list_2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal" id="whynot" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <h4 class="modal-title">请输入不通过理由<span style="color:red;">（必填）</span></h4>
+                </small></div><small class="font-bold">
+            <div class="modal-body">
+                <textarea rows=7 style="width:100%;font-size: 14px;" class="content"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button style="width: 120px;" type="button" class="btn btn-primary" onclick="sure()">确认</button>
+            </div>
+        </small></div><small class="font-bold">
+    </small></div><small class="font-bold">
+</small></div>
+<!-- jqGrid -->
+<script src="/public/js/jqgrid/i18n/grid.locale-cn.js?0820"></script>
+<script src="/public/js/jqgrid/jquery.jqGrid.min.js?0828"></script>
+<script src="/public/js/table.js?v=32"></script>
+<!-- Page-Level Scripts -->
+<script>
+    function gg(self) {
+        var id = $(self).parents('tr').attr('id'),
+        is_init = 1;
+        $('#whynot').attr('attr-id', id);
+    }
+    function dd(event) {
+        event.stopPropagation();
+    }
+
+    function sure() {
+        var data = {
+            content : $('#whynot .content').val(),
+            id : $('#whynot').attr('attr-id'),
+            name : $('#whynot').attr('attr-name'),
+        };
+        $.post('/admin/user/whynot', data, function(res) {
+            if(res.status == 'ok') {
+                $('#whynot .content').val('');
+                $('#whynot').modal('toggle');
+            } else {
+                alert(res.msg);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var id = "table_list_2", is_init = 0;
+        $grid = $("#table_list_2");
+
+        var config = [
+            {'str': '店名', 'name': 'name', 'align':'center'},
+            {'str': '联系电话', 'name': 'contact', 'align':'center'},
+            {'str': '产品列表页面', 'name': 'id', width:300, 'align':'center', formatter: function (data) {
+                var url = "{$website}/k/index/lists?shop_id=" + data;
+                return "<a href='" + url + "'>" + url +  "</a>";
+            }},
+            {'str': '审核', 'align':'center', 'name': 'review', width:80, edittype:'select', editoptions:{value: {"1":"审核中","2":"通过", "3":"不通过"}}, formatter: function (data) {
+                if(data == 0) {
+                    return '<p style="color:grey" onclick="dd(event)">未提交审核</p>';
+                } else if(data == 1){
+                    return '<p style="color:purple" onclick="gg(this)"><b>审核中</b></p>';
+                } else if(data == 2){
+                    return '<p style="color:green" onclick="dd(event)">审核通过</p>';
+                } else if(data == 3){
+                    if(is_init == 1) {
+                        $('#whynot').modal();
+                    }
+                    return '<p style="color:red" onclick="dd(event)">审核不通过</p>';
+                }
+
+            }},
+        ];
+
+        var params = {
+            },
+            other = {
+                edit: false,
+                add: false,
+                del: false,
+                search: true,
+            }
+
+        jgrid_init($grid, config, params, 180, '/admin/shop/', '#pager_list_2', null, {cellEdit : false},other );
+
+
+    });
+</script>

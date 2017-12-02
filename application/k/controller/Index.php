@@ -120,7 +120,7 @@ class Index extends Base
         $expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
         $this->assign('expire', $expire);
 
-        if($expire) { //如果商户没付钱或有效期已过
+        if($expire && !isset($_SESSION['admin'])) { //如果商户没付钱或有效期已过
             $this->assign('products', $products);
         } else {
             $query = array(

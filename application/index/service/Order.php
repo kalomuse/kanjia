@@ -26,15 +26,11 @@ class Order
             $query = array(
                 'id'=> $order['shop_id'],
             );
-            $user = M('user')->where($query)->find();
             $set = array(
+                `review`=> 1,
+                'is_pay' => 1,
                 'expire_time' => 0
             );
-            if($user['expire_time'] < time())
-                $set['expire_time'] = time() + 14 * 24 * 3600;
-            else
-                $set['expire_time'] += 14 * 24 * 3600;
-
             M('user')->where($query)->update($set);
         }
 

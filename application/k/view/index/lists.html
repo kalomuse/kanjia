@@ -50,7 +50,9 @@
             {/foreach}
     </ul>
 </section>
+{if !$is_admin}
 {include file="/wx_share" /}
+{/if}
 </body>
 <script>
     function delete_act(id) {
