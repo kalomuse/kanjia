@@ -54,6 +54,7 @@ class Base extends Controller
 
         } else {
             if(isset($_SESSION['admin'])) {
+                $this->assign('website', $this->get_website());
                 $this->assign('is_admin', 1);
             } else {
                 exit('请在微信中浏览');
