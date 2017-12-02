@@ -93,7 +93,7 @@ class Jssdk extends Model
     }
 
     // 获取一般的 access_token
-    public function get_access_token($name='jiashanquan'){
+    public function get_access_token($name='kan'){
         $redis = new \Redis();
         $redis->connect('127.0.0.1', '6379');
         $token = $redis->get("access_token_$name");
