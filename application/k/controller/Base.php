@@ -29,11 +29,6 @@ class Base extends Controller
             define('IS_POST', 0);
         }
 
-        $this->pre = C('pre');
-        $this->max = C('max');
-        $this->assign('title', C('title'));
-        $this->assign('pre', $this->pre);
-
         if (strstr($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger')) {
             $this->weixin_config = array(
                 'appid' => C('appid'),
@@ -47,9 +42,10 @@ class Base extends Controller
                 //session('openid',$wxuser);
             }
 
+
             $this->uid = $_SESSION['uid'];
             $this->session = $_SESSION['openid'];
-            $jssdk = new \app\index\service\Jssdk($this->weixin_config['appid'], $this->weixin_config['appsecret']);
+            $jssdk = new \app\index\service\Jssdk(C('appid'), C('appsecret'));
             $signPackage = $jssdk->GetSignPackage();
             $this->assign('is_admin', 0);
             $this->assign('website', $this->get_website());
@@ -58,7 +54,6 @@ class Base extends Controller
 
         } else {
             if(isset($_SESSION['admin'])) {
-                $this->assign('website', $this->get_website());
                 $this->assign('is_admin', 1);
             } else {
                 exit('请在微信中浏览');
