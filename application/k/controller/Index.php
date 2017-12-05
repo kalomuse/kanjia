@@ -12,6 +12,10 @@ class Index extends Base
             $product = M('product')->where('id', $id)->find();
             if($product) {
                 $prodct_service = new ProdctService();
+
+                $desc= explode("\n", $product['desc']);
+                $product['desc'] = "<p>".implode("</p><p>", $desc). "</p>";
+               
                 $rule= explode("\n", $product['rule']);
                 $product['rule'] = "<p>".implode("</p><p>", $rule). "</p>";
                 $product['pic'] = explode(',', $product['pic']);
