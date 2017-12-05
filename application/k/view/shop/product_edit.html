@@ -64,25 +64,6 @@
 					</div>
 				</div>
 				<div class="fn-clear item">
-					<label class="tit">商品描述:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.desc}" placeholder="请输入商品描述" class="txt-border desc" />
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">累计多少人砍价达到底价:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.count}" placeholder="累计多少人砍价达到底价" class="txt-border count" />
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">活动起止时间:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.start_time |substr=0,10}" class="txt-border txt-s start_time" /><span>-</span>
-						<input type="text" value="{$product.end_time| substr=0,10}" class="txt-border txt-s end_time" />
-					</div>
-				</div>
-				<div class="fn-clear item">
 					<label class="tit">上传活动主图:</label>
 					<div class="intr-img-list">
 						<div class="imgitem img"><!--上传商家介绍图后样式 -->
@@ -95,9 +76,9 @@
 					<div class="fn-clear"></div>
 				</div>
 				<div class="fn-clear item">
-					<label class="tit">活动规则:</label>
+					<label class="tit">商品描述:</label>
 					<div class="input-wrap">
-						<textarea class="txt-border txtarea rule">{$product.rule}</textarea>
+						<input type="text" value="{$product.desc}" placeholder="请输入商品描述" class="txt-border desc" />
 					</div>
 				</div>
 				<div class="fn-clear item">
@@ -119,6 +100,25 @@
 						{/if}
 						{/foreach}
 					</ul>
+				</div>
+				<div class="fn-clear item">
+					<label class="tit">累计多少人砍价达到底价:</label>
+					<div class="input-wrap">
+						<input type="text" value="{$product.count}" placeholder="累计多少人砍价达到底价" class="txt-border count" />
+					</div>
+				</div>
+				<div class="fn-clear item">
+					<label class="tit">活动起止时间:</label>
+					<div class="input-wrap">
+						<input type="text" value="{$product.start_time |substr=0,10}" class="txt-border txt-s start_time" /><span>-</span>
+						<input type="text" value="{$product.end_time| substr=0,10}" class="txt-border txt-s end_time" />
+					</div>
+				</div>
+				<div class="fn-clear item">
+					<label class="tit">活动规则:</label>
+					<div class="input-wrap">
+						<textarea class="txt-border txtarea rule">{$product.rule}</textarea>
+					</div>
 				</div>
 				<div class="fn-clear btn-wrap">
 					<input type="button" value="提交" class="btn" onclick="submit({$product.id})"/>
