@@ -141,7 +141,7 @@
 			本期商品<i>{$product.number}</i>份 剩余<i>{$left}</i>份
 		</div>
 		<div class="commodity-info">
-			{$product.desc}
+			<span style="font-size:16px;color:red;">{$product.desc}</span>
 			{foreach $product['pic'] as $p}
 			<img style="width:100%;" src="{$p}"  />
 			{/foreach}
