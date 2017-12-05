@@ -67,9 +67,19 @@
 				</div>
 				<div class="fn-clear item">
 					<label class="tit">商品描述:</label>
-					<div class="input-wrap">
-						<input type="text" value="" placeholder="请输入商品描述" class="txt-border desc" />
-					</div>
+					<textarea class="txt-border txtarea desc">
+					</textarea>
+				</div>
+				<div class="fn-clear item">
+					<label class="tit">上传商品图片:</label>
+					<ul class="add-photo-wrap">
+						<!--最多上传6张照片-->
+						<li onclick="dian('return_pic', this)">
+							<a  data-state="true" class="file_upload">
+								<img src="/public/img/add_user_photo.jpg" />
+							</a>
+						</li>
+					</ul>
 				</div>
 				<div class="fn-clear item">
 					<label class="tit">累计多少人砍价达到底价:</label>
@@ -105,17 +115,7 @@
 						</textarea>
 					</div>
 				</div>
-				<div class="fn-clear item">
-					<label class="tit">上传商品图片:</label>
-					<ul class="add-photo-wrap">
-						<!--最多上传6张照片-->
-						<li onclick="dian('return_pic', this)">
-							<a  data-state="true" class="file_upload">
-								<img src="/public/img/add_user_photo.jpg" />
-							</a>
-						</li>
-					</ul>
-				</div>
+
 				<div class="fn-clear btn-wrap">
 					<input type="button" value="提交" class="btn" onclick="submit();"/>
 				</div>
