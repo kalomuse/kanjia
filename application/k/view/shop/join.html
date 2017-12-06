@@ -14,7 +14,30 @@
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
 <script type="text/javascript" src="__STATIC__/js/index.js" ></script>
 	<style>
-
+		.add-photo-wrap li {
+			display: inline-block;
+			width: 31%;
+			margin: 3px 0.5%;
+			padding-bottom: 31%;
+			overflow: hidden;
+			border-radius: 5px;
+			position: relative;
+		}
+		.add-photo-wrap li a {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			border-radius: 5px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.add-photo-wrap li a img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border-radius: 5px;
+		}
 	</style>
 </head>
 <body>
@@ -41,19 +64,58 @@
 						<input type="text" value="{$contact}" placeholder="请输入联系电话" class="contact" />
 					</div>
 				</div>
+				<div class="fn-clear item">
+					<label class="tit">店铺图片:</label>
+				</div>
+			<ul class="add-photo-wrap">
+				<!--最多上传6张照片-->
+				<li onclick="dian('return_pic', this)">
+					<a data-state="true" class="file_upload">
+						<img src="/public/img/add_user_photo.jpg" />
+					</a>
+				</li>
+				{foreach $pic as $p}
+				{if $p}
+				<li>
+					<a>
+						<img src="{$p}" />
+					</a>
+				</li>
+				{/if}
+				{/foreach}
+			</ul>
+			<div class="item">
 				<input type="button" value="提交" class="btn" onclick="submit()"/>
-
+			</div>
 		</div>
+
 	</section>
+	<!--用来存放item-->
+	<div id="fileList" class="uploader-list" style="display: none;">
+		<div class="file-item " style="position: relative;">
+			<div id="filePicker">选择图片</div>
+		</div>
+	</div>
 </body>
-
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/webuploader/webuploader.min.js"></script>
+<script src="/public/js/webuploader/webuploader-demo.js?v=6"></script>
 <script>
-
+    pic = "{$pic_str}";
+    img_type = '';
+    function dian(type, self) {
+        var url = '/index/upload/img?type=return_pic';
+        img_type = type;
+        $list = $(self).parent();
+        uploader.option('server', url);
+        $('.webuploader-element-invisible').click();
+    }
 	function submit() {
 	    var data = {
 			'name': $('.name').val(),
 			'contact': $('.contact').val(),
 			'address': $('.address').val(),
+            'pic': pic,
 		}
         $.post('/k/shop/join', data, function(res) {
 			if(res.status == 'ok')

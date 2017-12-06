@@ -21,6 +21,9 @@ class Shop extends Base
     {
         if(IS_GET) {
             $user = M('user')->where('openid', $this->session)->find();
+            $pic = explode(',', trim($user['pic'], ','));
+            $this->assign('pic', $pic);
+            $this->assign('pic_str', trim($user['pic'], ','));
             $this->assign('name', $user['name']?$user['name']: '');
             $this->assign('address', $user['address']?$user['address']: '');
             $this->assign('contact', $user['contact']?$user['contact']: '');
@@ -36,6 +39,7 @@ class Shop extends Base
             'name' => I('name'),
             'contact' => I('contact'),
             'address' => I('address'),
+            'pic' => I('pic'),
         );
         M('user')->where('openid', $this->session)->update($set);
         return $this->ajaxReturn(array(
