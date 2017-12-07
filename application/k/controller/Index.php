@@ -13,9 +13,11 @@ class Index extends Base
             if($product) {
                 $prodct_service = new ProdctService();
 
-                $desc= explode("\n", $product['desc']);
+                $desc = explode("\n", $product['desc']);
                 $product['desc'] = "<p>".implode("</p><p>", $desc). "</p>";
-                $share_desc = implode(",", $desc);
+                str_replace( " ", "",$desc);
+                $share_desc = implode(" ", $desc);
+
 
                 $rule= explode("\n", $product['rule']);
                 $product['rule'] = "<p>".implode("</p><p>", $rule). "</p>";
