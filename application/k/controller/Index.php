@@ -15,6 +15,7 @@ class Index extends Base
 
                 $desc= explode("\n", $product['desc']);
                 $product['desc'] = "<p>".implode("</p><p>", $desc). "</p>";
+                $share_desc = implode(",", $desc);
 
                 $rule= explode("\n", $product['rule']);
                 $product['rule'] = "<p>".implode("</p><p>", $rule). "</p>";
@@ -103,9 +104,8 @@ class Index extends Base
                 if($fromuid)
                     $this->signPackage['link'] .= "&hisuid={$fromuid}";
 
-
                 
-                $this->signPackage['desc'] = $product['desc'];
+                $this->signPackage['desc'] = $share_desc;
                 $this->signPackage['title'] = $product['title'];
                 $this->assign('signPackage', $this->signPackage);
                 return $this->fetch();

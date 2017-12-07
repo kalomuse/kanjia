@@ -8,12 +8,33 @@
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
-<script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
-<script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
 <script type="text/javascript" src="__STATIC__/js/index.js" ></script>
 	<style>
+		.close:focus, .close:hover {
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+			filter: alpha(opacity=50);
+			opacity: .5;
+		}
+		button.close {
+			-webkit-appearance: none;
+			padding: 0;
+			cursor: pointer;
+			background: 0 0;
+			border: 0;
+		}
+		.close {
+			float: right;
+			font-size: 21px;
+			font-weight: 700;
+			line-height: 1;
+			color: #000;
+			text-shadow: 0 1px 0 #fff;
+			filter: alpha(opacity=20);
+			opacity: .2;
+		}
 		.add-photo-wrap li {
 			display: inline-block;
 			width: 31%;
@@ -78,6 +99,7 @@
 				{if $p}
 				<li>
 					<a>
+						<button type="button" onclick="del_img('{$p}', this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<img src="{$p}" />
 					</a>
 				</li>
@@ -103,6 +125,15 @@
 <script>
     pic = "{$pic_str}";
     img_type = '';
+    function del_img(src, self) {
+        $.post('/k/shop/delimg', {src:src}, function(res) {
+            if(res.status == 'ok')
+                $(self).parents('li').remove();
+            else {
+                alert(res.msg);
+            }
+        });
+	}
     function dian(type, self) {
         var url = '/index/upload/img?type=return_pic';
         img_type = type;
