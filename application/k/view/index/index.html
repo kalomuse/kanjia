@@ -165,6 +165,10 @@
 			<p>店名：{$shop.name}</p>
 			<p>地址：{$shop.address}</p>
 			<p>电话：{$shop.contact}</p>
+			<div style="height:20px;"></div>
+			{foreach $shop.pic as $pic}
+				<img src="{$pic}">
+			{/foreach}
 			<div class="bargain-btn-wrap">
 				<a href="/k/index/lists?shop_id={$product.uid}" class="user-bargain-btn">查看其他活动</a>
 			</div>

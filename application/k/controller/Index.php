@@ -73,6 +73,9 @@ class Index extends Base
                 $this->assign('expire', $expire);
                 $msg = $prodct_service->check($left, $product, $expire);
 
+                //商家图片
+                $shop['pic'] = explode(',', $shop['pic']);
+
                 $this->assign('msg', $msg);
                 $this->assign('endtime', $endtime);
                 $this->assign('low_order', $low_order);
@@ -99,6 +102,7 @@ class Index extends Base
                     $fromuid = $this->uid;
                 if($fromuid)
                     $this->signPackage['link'] .= "&hisuid={$fromuid}";
+
 
                 
                 $this->signPackage['desc'] = $product['desc'];
