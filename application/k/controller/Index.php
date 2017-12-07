@@ -15,7 +15,9 @@ class Index extends Base
 
                 $desc = explode("\n", $product['desc']);
                 $product['desc'] = "<p>".implode("</p><p>", $desc). "</p>";
-                $share_desc = implode(" ", str_replace(" ", "", $desc));
+                foreach($desc as &$d)
+                    $d = str_replace(" ", "", $d);
+                $share_desc = implode(" ", $desc);
 
                 $rule= explode("\n", $product['rule']);
                 $product['rule'] = "<p>".implode("</p><p>", $rule). "</p>";
