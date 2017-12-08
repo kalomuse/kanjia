@@ -72,18 +72,35 @@ class Shop extends Base
     //删除商品图片
     public function delimg() {
         $img = I('src');
-        $user = M('user')->where('id', $this->uid)->find();
-        $pics = explode(',', $user['pic']);
-        foreach($pics as $k=>$p) {
-            if($p == $img) {
-                unset($pics[$k]);
-                break;
+        $table = I('table');
+        if($table == 'product') {
+            $id = I('pid');
+            $user = M($table)->where('id', $id)->find();
+            $pics = explode(',', $user['pic']);
+            foreach ($pics as $k => $p) {
+                if ($p == $img) {
+                    unset($pics[$k]);
+                    break;
+                }
             }
+            $set = array(
+                'pic' => implode(',', $pics),
+            );
+            M($table)->where('id', $id)->update($set);
+        } else if($table == 'user') {
+            $user = M($table)->where('id', $this->uid)->find();
+            $pics = explode(',', $user['pic']);
+            foreach ($pics as $k => $p) {
+                if ($p == $img) {
+                    unset($pics[$k]);
+                    break;
+                }
+            }
+            $set = array(
+                'pic' => implode(',', $pics),
+            );
+            M($table)->where('id', $this->uid)->update($set);
         }
-        $set = array(
-            'pic' => implode(',', $pics),
-        );
-        M('user')->where('id', $this->uid)->update($set);
         return $this->ajaxReturn(array(
             'status' => 'ok',
         ));

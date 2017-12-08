@@ -126,7 +126,7 @@
     pic = "{$pic_str}";
     img_type = '';
     function del_img(src, self) {
-        $.post('/k/shop/delimg', {src:src}, function(res) {
+        $.post('/k/shop/delimg', {table:'user', src:src}, function(res) {
             if(res.status == 'ok')
                 $(self).parents('li').remove();
             else {
