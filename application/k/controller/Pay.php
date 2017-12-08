@@ -53,11 +53,11 @@ class Pay
             $go_url = "/k/index/wechat?from=pay";
             $back_url = "/k/shop/product_list?from=pay";
         } else {
-            $user = M('user')->where('id', $_SESSION['uid'])->find();
-            //判断产品是否售完，过期，未付款
-            $expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
             $id = I('product_id', '');
             $product = M('product')->where('id', $id)->find();
+            $user = M('user')->where('id', $product['uid'])->find();
+            //判断产品是否售完，过期，未付款
+            $expire = isset($user['expire_time']) && $user['expire_time'] > time()? 0: 1;
             $prodct_service = new ProdctService();
             $msg = $prodct_service->check(null, $product, $expire);
             if($msg)
