@@ -11,6 +11,9 @@
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
 <script type="text/javascript" src="__STATIC__/js/index.js" ></script>
 	<style>
+		li {
+			position: relative;
+		}
 		.close:focus, .close:hover {
 			color: #000;
 			text-decoration: none;
@@ -26,14 +29,16 @@
 			border: 0;
 		}
 		.close {
-			float: right;
+			color: red;
+			z-index: 999;
+			position: absolute;
+			right: 5px;
 			font-size: 21px;
 			font-weight: 700;
 			line-height: 1;
-			color: #000;
 			text-shadow: 0 1px 0 #fff;
 			filter: alpha(opacity=20);
-			opacity: .2;
+			opacity: .7;
 		}
 		.add-photo-wrap li {
 			display: inline-block;
@@ -99,7 +104,7 @@
 				{if $p}
 				<li>
 					<a>
-						<button type="button" onclick="del_img('{$p}', this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<button type="button" onclick="remove_img(this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<img src="{$p}" />
 					</a>
 				</li>
@@ -125,15 +130,16 @@
 <script>
     pic = "{$pic_str}";
     img_type = '';
-    function del_img(src, self) {
-        $.post('/k/shop/delimg', {table:'user', src:src}, function(res) {
-            if(res.status == 'ok')
-                $(self).parents('li').remove();
-            else {
-                alert(res.msg);
-            }
-        });
-	}
+    function remove_img(self) {
+        var reg=/,$/gi;
+		var index = $(self).parents('li').index(),
+			pic_array = pic.replace(reg,"").split(",");
+        pic_array.splice(index - 1, 1);
+		pic = pic_array.join();
+		pic = pic?pic  +  ',': '';
+		$(self).parents('li').remove();
+    }
+
     function dian(type, self) {
         var url = '/index/upload/img?type=return_pic';
         img_type = type;
@@ -157,6 +163,7 @@
 		});
 
 	}
+
 
 </script>
 </html>

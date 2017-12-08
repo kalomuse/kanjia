@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>活动列表</title>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/><link rel="stylesheet" type="text/css" href="/public/js/webuploader/webuploader.css?v=21">
-<script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="__STATIC__/js/index.js" ></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>活动列表</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/><link rel="stylesheet" type="text/css" href="/public/js/webuploader/webuploader.css?v=21">
+	<script type="text/javascript" src="__STATIC__/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/index.js" ></script>
 	<style>
+		li {
+			position: relative;
+		}
 		.close:focus, .close:hover {
 			color: #000;
 			text-decoration: none;
@@ -25,14 +28,16 @@
 			border: 0;
 		}
 		.close {
-			float: right;
+			color: red;
+			z-index: 999;
+			position: absolute;
+			right: 5px;
 			font-size: 21px;
 			font-weight: 700;
 			line-height: 1;
-			color: #000;
 			text-shadow: 0 1px 0 #fff;
 			filter: alpha(opacity=20);
-			opacity: .2;
+			opacity: .7;
 		}
 		.add-photo-wrap li {
 			display: inline-block;
@@ -61,102 +66,102 @@
 	</style>
 </head>
 <body>
-	<section class="activityedit">
-		<div class="activityedit-wrap">
-				<div class="fn-clear item">
-					<label class="tit">活动标题:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.title}" placeholder="请输入活动标题" class="txt-border title" />
-					</div>
+<section class="activityedit">
+	<div class="activityedit-wrap">
+		<div class="fn-clear item">
+			<label class="tit">活动标题:</label>
+			<div class="input-wrap">
+				<input type="text" value="{$product.title}" placeholder="请输入活动标题" class="txt-border title" />
+			</div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">活动商品库存:</label>
+			<div class="input-wrap">
+				<input type="text" value="{$product.number}" placeholder="请输入活动商品数量" class="txt-border number" />
+			</div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">活动商品原价:</label>
+			<div class="input-wrap">
+				<input type="text" value="{$product.old_price}" placeholder="" class="txt-border old_price" />
+			</div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">活动商品底价:</label>
+			<div class="input-wrap">
+				<input type="text" value="{$product.low_price}" placeholder="" class="txt-border low_price" />
+			</div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">上传活动主图:</label>
+			<div class="intr-img-list">
+				<div class="imgitem img"><!--上传商家介绍图后样式 -->
+					<img src="{$product.first_pic}"/>
 				</div>
-				<div class="fn-clear item">
-					<label class="tit">活动商品库存:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.number}" placeholder="请输入活动商品数量" class="txt-border number" />
-					</div>
+				<div class="imgitem addimg-btn" onclick="dian('return_first_pic', this)"><!--上传商家介绍图按钮样式 -->
 				</div>
-				<div class="fn-clear item">
-					<label class="tit">活动商品原价:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.old_price}" placeholder="" class="txt-border old_price" />
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">活动商品底价:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.low_price}" placeholder="" class="txt-border low_price" />
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">上传活动主图:</label>
-					<div class="intr-img-list">
-						<div class="imgitem img"><!--上传商家介绍图后样式 -->
-							<img src="__STATIC__/images/temp/data01.jpg"/>
-						</div>
-						<div class="imgitem addimg-btn" onclick="dian('return_first_pic', this)"><!--上传商家介绍图按钮样式 -->
-						</div>
-					</div>
-					<div class="fn-clear"></div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">商品与活动描述:</label>
-					<div class="input-wrap">
+			</div>
+			<div class="fn-clear"></div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">商品与活动描述:</label>
+			<div class="input-wrap">
 						<textarea class="txt-border txtarea desc">
 							{$product.desc}
 						</textarea>
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">上传商品图片:</label>
-					<ul class="add-photo-wrap">
-						<!--最多上传6张照片-->
-						<li onclick="dian('return_pic', this)">
-							<a data-state="true" class="file_upload">
-								<img src="/public/img/add_user_photo.jpg" />
-							</a>
-						</li>
-						{foreach $product.pic as $p}
-						{if $p}
-						<li>
-							<a>
-								<button type="button" onclick="del_img('{$p}', this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<img src="{$p}" />
-							</a>
-						</li>
-						{/if}
-						{/foreach}
-					</ul>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">累计多少人砍价达到底价:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.count}" placeholder="累计多少人砍价达到底价" class="txt-border count" />
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">活动起止时间:</label>
-					<div class="input-wrap">
-						<input type="text" value="{$product.start_time |substr=0,10}" class="txt-border txt-s start_time" /><span>-</span>
-						<input type="text" value="{$product.end_time| substr=0,10}" class="txt-border txt-s end_time" />
-					</div>
-				</div>
-				<div class="fn-clear item">
-					<label class="tit">活动规则:</label>
-					<div class="input-wrap">
-						<textarea class="txt-border txtarea rule">{$product.rule}</textarea>
-					</div>
-				</div>
-				<div class="fn-clear btn-wrap">
-					<input type="button" value="提交" class="btn" onclick="submit({$product.id})"/>
-				</div>
+			</div>
 		</div>
-	</section>
-	<!--用来存放item-->
-	<div id="fileList" class="uploader-list" style="display: none;">
-		<div class="file-item " style="position: relative;">
-			<div id="filePicker">选择图片</div>
+		<div class="fn-clear item">
+			<label class="tit">上传商品图片:</label>
+			<ul class="add-photo-wrap">
+				<!--最多上传6张照片-->
+				<li onclick="dian('return_pic', this)">
+					<a data-state="true" class="file_upload">
+						<img src="/public/img/add_user_photo.jpg" />
+					</a>
+				</li>
+				{foreach $product.pic as $p}
+				{if $p}
+				<li>
+					<a>
+						<button type="button" onclick="remove_img(this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<img src="{$p}" />
+					</a>
+				</li>
+				{/if}
+				{/foreach}
+			</ul>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">累计多少人砍价达到底价:</label>
+			<div class="input-wrap">
+				<input type="text" value="{$product.count}" placeholder="累计多少人砍价达到底价" class="txt-border count" />
+			</div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">活动起止时间:</label>
+			<div class="input-wrap">
+				<input type="text" value="{$product.start_time |substr=0,10}" class="txt-border txt-s start_time" /><span>-</span>
+				<input type="text" value="{$product.end_time| substr=0,10}" class="txt-border txt-s end_time" />
+			</div>
+		</div>
+		<div class="fn-clear item">
+			<label class="tit">活动规则:</label>
+			<div class="input-wrap">
+				<textarea class="txt-border txtarea rule">{$product.rule}</textarea>
+			</div>
+		</div>
+		<div class="fn-clear btn-wrap">
+			<input type="button" value="提交" class="btn" onclick="submit({$product.id})"/>
 		</div>
 	</div>
+</section>
+<!--用来存放item-->
+<div id="fileList" class="uploader-list" style="display: none;">
+	<div class="file-item " style="position: relative;">
+		<div id="filePicker">选择图片</div>
+	</div>
+</div>
 </body>
 <script src="/public/js/jquery.min.js"></script>
 <script src="/public/js/webuploader/webuploader.min.js"></script>
@@ -172,15 +177,19 @@
         uploader.option('server', url);
         $('.webuploader-element-invisible').click();
     }
-    function del_img(src, self) {
-        $.post('/k/shop/delimg', {table:'product', src:src, pid:{$product.id}}, function(res) {
-            if(res.status == 'ok')
-                $(self).parents('li').remove();
-            else {
-                alert(res.msg);
-            }
-        });
+
+    function remove_img(self) {
+        console.log(pic);
+        var reg = /,$/gi;
+        var index = $(self).parents('li').index(),
+            pic_array = pic.replace(reg, "").split(",");
+        pic_array.splice(index - 1, 1);
+        pic = pic_array.join();
+        pic = pic ? pic + ',' : '';
+        $(self).parents('li').remove();
+        console.log(pic);
     }
+
     function submit(id) {
         var data = {
             title: $('.title').val(),

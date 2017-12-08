@@ -40,6 +40,7 @@ class Shop extends Base
             'contact' => I('contact'),
             'address' => I('address'),
             'pic' => I('pic'),
+            'role' => 'shop',
         );
         M('user')->where('openid', $this->session)->update($set);
         return $this->ajaxReturn(array(
@@ -49,6 +50,8 @@ class Shop extends Base
 
     public function center()
     {
+        $user = M('user')->where('openid', $this->session)->find();
+        $this->assign('role', $user['role']);
         return $this->fetch();
     }
     public function product_new() {

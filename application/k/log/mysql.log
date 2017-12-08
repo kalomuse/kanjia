@@ -32,6 +32,7 @@ alter table user add `is_pay` int(3) default 0  COMMENT '是否支付:0没，1�
 alter table user add `pay_openid` varchar(32) COMMENT '支付的openid' after `openid`;
 alter table user add `review` int(3) default 0  COMMENT '是否通过审核,0:未提交审核, 1：审核中,2:审核通过,3审核不通过';
 alter table user add `reason` varchar(256) default 0 COMMENT '不通过理由';
+alter table user add `pic` text not null  COMMENT '店铺列表';
 
 
 CREATE TABLE `orders` (

@@ -92,6 +92,7 @@
 <body>
 <section>
     <ul class="personal-nav">
+        {if $role == 'shop'}
         <li>
             <a href="join">
                 <div class="fl"><i class="iconfont icon-king"></i><span>店铺信息</span></div>
@@ -122,6 +123,20 @@
                 <div class="fr"><i class="iconfont icon-return"></i></div>
             </a>
         </li>
+        <li>
+            <a href="product_list">
+                <div class="fl"><i class="iconfont icon-shezhi"></i><span>我的砍价</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        {else}
+        <li>
+            <a href="product_list">
+                <div class="fl"><i class="iconfont icon-shezhi"></i><span>我的砍价</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        {/if}
     </ul>
 </section>
 </body>

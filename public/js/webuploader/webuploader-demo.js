@@ -26,7 +26,7 @@ var uploader = WebUploader.create({
 // 当有文件添加进来的时候
 uploader.on( 'fileQueued', function( file ) {
     var $li = $(
-        '<li><a href="javscript:;"><img/></a></li>'
+        '<li><a><button type="button" onclick="remove_img(this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button><img/></button></li></a>'
     ),$img = $li.find('img');
     if(img_type == 'return_first_pic')
         $list.html( $li );

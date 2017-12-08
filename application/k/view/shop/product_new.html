@@ -12,30 +12,59 @@
 <script type="text/javascript" src="__STATIC__/js/index.js" ></script>
 
 		<style>
-		.add-photo-wrap li {
-			display: inline-block;
-			width: 31%;
-			margin: 3px 0.5%;
-			padding-bottom: 31%;
-			overflow: hidden;
-			border-radius: 5px;
-			position: relative;
-		}
-		.add-photo-wrap li a {
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			border-radius: 5px;
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-		.add-photo-wrap li a img {
-			display: block;
-			width: 100%;
-			height: 100%;
-			border-radius: 5px;
-		}
+			li {
+				position: relative;
+			}
+			.close:focus, .close:hover {
+				color: #000;
+				text-decoration: none;
+				cursor: pointer;
+				filter: alpha(opacity=50);
+				opacity: .5;
+			}
+			button.close {
+				-webkit-appearance: none;
+				padding: 0;
+				cursor: pointer;
+				background: 0 0;
+				border: 0;
+			}
+			.close {
+				color: red;
+				z-index: 999;
+				position: absolute;
+				right: 5px;
+				font-size: 21px;
+				font-weight: 700;
+				line-height: 1;
+				text-shadow: 0 1px 0 #fff;
+				filter: alpha(opacity=20);
+				opacity: .7;
+			}
+			.add-photo-wrap li {
+				display: inline-block;
+				width: 31%;
+				margin: 3px 0.5%;
+				padding-bottom: 31%;
+				overflow: hidden;
+				border-radius: 5px;
+				position: relative;
+			}
+			.add-photo-wrap li a {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				border-radius: 5px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			.add-photo-wrap li a img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border-radius: 5px;
+			}
 	</style>
 </head>
 <body>
@@ -136,7 +165,17 @@
     first_pic = '';
     pic = '';
     img_type = '';
-    function dian(type, self) {
+    function remove_img(self) {
+        var reg = /,$/gi;
+        var index = $(self).parents('li').index(),
+            pic_array = pic.replace(reg, "").split(",");
+        pic_array.splice(index - 1, 1);
+        pic = pic_array.join();
+        pic = pic ? pic + ',' : '';
+        $(self).parents('li').remove();
+    }
+
+        function dian(type, self) {
         var url = '/index/upload/img?type=' + type;
         img_type = type;
         $list = $(self).parent();
