@@ -1,39 +1,73 @@
 CREATE TABLE `user` (
-   id int(11) unsigned not null auto_increment,
-   `type` int(4) NOT NULL DEFAULT 0 COMMENT '类型1.商家活动支付 101.用户购买支付',
-   `password` char(32) NOT NULL DEFAULT '' COMMENT '密码',
-   `role` text COMMENT '角色',
-   `nickname` varchar(32) NOT NULL DEFAULT '' COMMENT '微信昵称',
-   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '店铺名称',
-   `contact` varchar(32) NOT NULL DEFAULT '' COMMENT '手机号码',
-   `address` varchar(256) NOT NULL DEFAULT '' COMMENT '店铺地址',
-   `file` varchar(256) NOT NULL DEFAULT '' COMMENT '头像',
-   `subscribe`  int(1) DEFAULT 0 comment '是否订阅',
-   `sex` varchar(2) NOT NULL DEFAULT '' COMMENT '性别',
-   `expire_time` int(10) COMMENT '过期时间',
-   `is_pay` int(3) default 0  COMMENT '是否支付:0没，1：有',
-   `review` int(3) default 0  COMMENT '是否通过审核,0:未提交审核, 1：审核中,2:审核通过,3审核不通过',
-   `reason` varchar(256) default 0 COMMENT '不通过理由',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(4) NOT NULL DEFAULT '0' COMMENT '类型1.商家活动支付 101.用户购买支付',
+  `password` char(32) NOT NULL DEFAULT '' COMMENT '密码',
+  `role` text COMMENT '角色',
+  `nickname` varchar(32) NOT NULL DEFAULT '' COMMENT '微信昵称',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '店铺名称',
+  `contact` varchar(32) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `address` varchar(256) NOT NULL DEFAULT '' COMMENT '店铺地址',
+  `file` varchar(256) NOT NULL DEFAULT '' COMMENT '头像',
+  `subscribe` int(1) DEFAULT '0' COMMENT '是否订阅',
+  `sex` varchar(2) NOT NULL DEFAULT '' COMMENT '性别',
+  `expire_time` int(10) DEFAULT NULL COMMENT '过期时间',
+  `openid` varchar(32) DEFAULT NULL COMMENT 'openid',
+  `pay_openid` varchar(32) DEFAULT NULL COMMENT '支付的openid',
+  `oauth` varchar(10) DEFAULT NULL COMMENT '三方登录APP',
+  `reg_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
+  `last_login` varchar(16) DEFAULT NULL COMMENT '上次登录时间',
+  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `deleted` int(4) unsigned DEFAULT '0',
+  `is_pay` int(3) DEFAULT '0' COMMENT '是否支付:0没，1：有',
+  `review` int(3) DEFAULT '0' COMMENT '是否通过审核,0:未提交审核, 1：审核中,2:审核通过,3审核不通过',
+  `reason` varchar(256) DEFAULT '0' COMMENT '不通过理由',
+  `pic` text NOT NULL COMMENT '店铺列表',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 
+ CREATE TABLE `admin` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '所属公司id',
+  `area` varchar(64) NOT NULL COMMENT '地区',
+  `role` text COMMENT '角色',
+  `username` char(20) NOT NULL DEFAULT '' COMMENT '用户名',
+  `password` char(32) NOT NULL DEFAULT '' COMMENT '密码',
+  `nickname` char(20) NOT NULL DEFAULT '' COMMENT '昵称',
+  `email` char(32) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `deleted` int(4) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-   `openid` varchar(32) COMMENT 'openid',
-   `pay_openid` varchar(32) COMMENT '支付的openid';
-   `oauth` varchar(10)  COMMENT '三方登录APP',
+CREATE TABLE `role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `role` varchar(128) DEFAULT NULL,
+  `area` varchar(64) NOT NULL COMMENT '地区',
+  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `deleted` int(4) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-   `reg_time` datetime default CURRENT_TIMESTAMP COMMENT '注册时间',
-   `last_login` varchar(16) COMMENT '上次登录时间',
-   created_time datetime default CURRENT_TIMESTAMP,
-   modified_time datetime default CURRENT_TIMESTAMP,
-   deleted int(4) unsigned default 0,
-   primary key(id)) DEFAULT CHARSET=utf8;
-
-alter table user add `expire_time` int(10) COMMENT '过期时间' after `sex`;
-alter table user add `is_pay` int(3) default 0  COMMENT '是否支付:0没，1：有';
-alter table user add `pay_openid` varchar(32) COMMENT '支付的openid' after `openid`;
-alter table user add `review` int(3) default 0  COMMENT '是否通过审核,0:未提交审核, 1：审核中,2:审核通过,3审核不通过';
-alter table user add `reason` varchar(256) default 0 COMMENT '不通过理由';
-alter table user add `pic` text not null  COMMENT '店铺列表';
-
+CREATE TABLE `bill` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `is_get` int(3) DEFAULT '0' COMMENT '类型0：支出1：收入',
+  `type` int(3) DEFAULT '0' COMMENT '类型1：会员收入2：101：中介小费',
+  `amount` decimal(10,2) DEFAULT '0.00' COMMENT '金额',
+  `order_id` int(10) NOT NULL COMMENT '订单id',
+  `userid` int(10) DEFAULT '0' COMMENT '用户id',
+  `area` varchar(64) NOT NULL COMMENT '地区',
+  `has_pay` int(3) DEFAULT '1' COMMENT '红包是否已发放',
+  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `deleted` int(4) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
