@@ -30,7 +30,11 @@
     <ul class="activity-list">
         {foreach $products as $p}
         <li>
+            {if $page_type eq 'my_activity'}
+            <a href="/k?id={$p.id}&hisuid={$uid}">
+            {else}
             <a href="/k?id={$p.id}">
+            {/if}
                 <div class="img"><img style="max-height:120px;" src="{$p.first_pic}" /></div>
                 <div class="info" id="product{$p.id}">
                     <div class="tit">{$p.title}</div>
@@ -50,7 +54,7 @@
             {/foreach}
     </ul>
 </section>
-{if !$is_admin}
+{if !$is_admin && !$noshare}
 {include file="/wx_share" /}
 {/if}
 </body>

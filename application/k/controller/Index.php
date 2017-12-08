@@ -75,7 +75,6 @@ class Index extends Base
                 $expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
                 $this->assign('expire', $expire);
                 $msg = $prodct_service->check($left, $product, $expire);
-
                 //商家图片
                 $shop['pic'] = explode(',', $shop['pic']);
 
@@ -119,6 +118,39 @@ class Index extends Base
 
     }
 
+    public function all_activity() {
+        $query = array(
+            'deleted' => 0,
+            'end_time' => array('gt', date('Y-m-d'))
+        );
+        $products = M('product')->where($query)->select();
+        $this->assign('products', $products);
+        $this->assign('noshare', 1);
+        $this->assign('page_type', 'all_activity');
+        return $this->fetch('lists');
+
+    }
+
+    public function my_activity() {
+        $order = M('orders')->where('user_id', $this->uid)->select();
+        $pids = [];
+        foreach($order as $o) {
+            if($o['product_id'])
+                $pids[] = $o['product_id'];
+        }
+        $query = array(
+            'deleted' => 0,
+            'end_time' => array('gt', date('Y-m-d')),
+            'id' => array('in', $pids),
+        );
+        $products = M('product')->where($query)->select();
+        $this->assign('products', $products);
+        $this->assign('noshare', 1);
+        $this->assign('uid', $_SESSION['uid']);
+        $this->assign('page_type', 'my_activity');
+        return $this->fetch('lists');
+    }
+
     public function lists()
     {
         $shop_id = I('shop_id', 0);
@@ -141,6 +173,8 @@ class Index extends Base
             $this->assign('products', $products);
         }
 
+        $this->assign('page_type', 'lists');
+        $this->assign('noshare', 0);
         $user = M('user')->where('id', $shop_id)->find();
         //微信分享赋值
         $website = $this->get_website();
