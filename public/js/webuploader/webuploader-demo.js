@@ -29,7 +29,7 @@ uploader.on( 'fileQueued', function( file ) {
         '<li><a><button type="button" onclick="remove_img(this)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button><img/></button></li></a>'
     ),$img = $li.find('img');
     if(img_type == 'return_first_pic')
-        $list.html( $li );
+        $list.html($li);
     else if(img_type == 'return_pic')
         $list.append( $li );
 
@@ -69,6 +69,7 @@ uploader.on( 'uploadSuccess', function( file, res ) {
     if(res && res.path) {
         if(res.type == 'first_pic') {
             first_pic = res.path;
+            $('.intr-img-list .close').remove();
         } else if(res.type == 'pic') {
             pic += res.path + ',';
         }
