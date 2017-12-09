@@ -51,7 +51,9 @@ class Shop extends Base
     public function center()
     {
         $user = M('user')->where('openid', $this->session)->find();
+        $head = explode('||', $user['file'])[0];
         $this->assign('role', $user['role']);
+        $this->assign('head', $head);
         return $this->fetch();
     }
     public function product_new() {

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+    <style>
+        body {
+            font-size: 20px;
+            background: #f6f6f6;
+        }
+        .personal-nav{
+            margin-top: 10px;
+        }
+        .personal-nav li{
+            background: #fff;
+            border-top: 1px solid #cdcdcd;
+            height: 50px;
+        }
+        .personal-nav li:first-child{
+            border-top: 0 none;
+        }
+        .personal-nav li a{
+            display: block;
+            height: 50px;
+        }
+        .personal-nav li .fl{
+            padding-left: 12px;
+            height: 50px;
+            line-height: 50px;
+        }
+        .personal-nav li .fl i{
+            font-size: 24px;
+            color: #888;
+            padding-right: 5px;
+            line-height: 50px;
+            float: left;
+            margin-top: 2px;
+        }
+        .personal-nav li .fl span{
+            font-size: 16px;
+            color: #333;
+            line-height: 50px;
+        }
+        .personal-nav li .fr{
+            height: 50px;
+        }
+        .personal-nav li .fr .icon-return{
+            float: right;
+            font-size: 24px;
+            padding: 8px 10px 0 8px;
+            color: #888;
+            line-height: 40px;
+        }
+        .personal-nav li .fr .money{
+            float: right;
+            font-size: 16px;
+            color: #888;
+            line-height: 50px;
+        }
+        .personal-nav li .fr .money i{
+            color: #ff4d4d;
+        }
+        .personal-nav li .fr .level-span{
+            float: left;
+            height: 20px;
+            border-radius: 10px;
+            background: #A3D900;
+            padding: 0 9px;
+            font-size: 12px;
+            color: #fff;
+            line-height: 20px;
+            margin-top: 15px;
+        }
+        .personal-nav li .fr .level-span i{
+            font-size: 14px;
+            padding-right: 4px;
+        }
+        .personal-nav li .fr .level-span01{
+            background: #A3D900;
+        }
+        .personal-nav li .fr .level-span02{
+            background: #07f7de;
+        }
+        .personal-nav li .fr .level-span03{
+            background: #f94202;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <ul class="personal-nav">
+        {if $role == 'shop'}
+        <li>
+            <a href="join">
+                <div class="fl"><i class="iconfont icon-king"></i><span>店铺信息</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        <li>
+            <a href="product_new">
+                <div class="fl"><i class="iconfont icon-duihua"></i><span>新建活动</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        <li>
+            <a href="product_list">
+                <div class="fl"><i class="iconfont icon-shezhi"></i><span>活动列表</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        <li>
+            <a href="order_list">
+                <div class="fl"><i class="iconfont  icon-shezhi"></i><span>已购买名单</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        <li>
+            <a href="pack">
+                <div class="fl"><i class="iconfont  icon-qianbao1"></i><span>我的钱包</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        <li>
+            <a href="/k/index/my_activity">
+                <div class="fl"><i class="iconfont icon-shezhi"></i><span>我的砍价</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        {else}
+        <li>
+            <a href="/k/index/my_activity">
+                <div class="fl"><i class="iconfont icon-shezhi"></i><span>我的砍价</span></div>
+                <div class="fr"><i class="iconfont icon-return"></i></div>
+            </a>
+        </li>
+        {/if}
+    </ul>
+</section>
+</body>
+</html>

@@ -53,6 +53,21 @@
         </li>
             {/foreach}
     </ul>
+    {if $page_type eq 'all_activity'}
+    <link href="__STATIC__/css/index/layui.css" rel="stylesheet">
+    <link href="__STATIC__/css/index/home.css" rel="stylesheet">
+    <style>
+        .home-footer ul li {
+            width: 50%;
+        }
+    </style>
+    <footer class="home-footer seckill-home-footer">
+        <ul>
+            <li class="select"><a><i></i>首页</a></li>
+            <li><a href="/k/shop/center"><i></i>个人中心</a></li>
+        </ul>
+    </footer>
+    {/if}
 </section>
 {if !$is_admin && !$noshare}
 {include file="/wx_share" /}
