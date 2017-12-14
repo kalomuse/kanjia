@@ -46,7 +46,8 @@
 	<!--banner start-->
 	<div class="top">
 		<a href="/k/index/tousu">投诉</a>
-		<a  class="a2" href="/k/shop/center">个人中心</a>
+		<a class="a2" href="/k/shop/center">个人中心</a>
+		<a style="margin-top: 10px;" onclick="pause(this)" flag="1">静音</a>
 	</div>
 	<div class="banner">
 		<img src="{$website.$product.first_pic}" />
@@ -277,6 +278,19 @@
 <script>
 		var endtime = {$endtime};
         setInterval("leftTimer()", 1000);
+
+        function pause(self) {
+            var flag = $(self).attr('flag');
+            if(flag == 1) {
+                $(self).attr('flag', 0);
+                $(self).html('播放');
+                audio.pause();
+            } else {
+                $(self).attr('flag', 1);
+                $(self).html('静音');
+                audio.play();
+			}
+		}
 
         function check() {
             {if $msg}

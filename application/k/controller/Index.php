@@ -26,11 +26,11 @@ class Index extends Base
                 $shop = M('user')->where('id', $product['uid'])->find();
                 //判断当前用户是否已加入砍价
                 $has_join = $prodct_service->has_join($id, $this->uid);
-                if(!I('hisuid', 0) && $has_join) {
+                if(!I('hisuid', 0) && $has_join) { //如果是商家展示页面，但是参加了这个活动，则默认显示我的抢购页面
                     $_GET['hisuid'] = $this->uid;
                     $hisuid = $this->uid;
                 }
-                
+
                 $his = M('user')->where('id', $hisuid)->find();
 
                 //倒计时
