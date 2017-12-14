@@ -4,6 +4,7 @@ var uploader = WebUploader.create({
 
     // 选完文件后，是否自动上传。
     auto: true,
+    fileSizeLimit: 2*1024*1024,
 
     // swf文件路径
     swf: '/public/js/webuploader/webuploader/Uploader.swf',
@@ -51,7 +52,7 @@ uploader.on( 'fileQueued', function( file ) {
 });
 // 文件上传过程中创建进度条实时显示。
 uploader.on( 'uploadProgress', function( file, percentage ) {
-    var $li = $( '#'+file.id ),
+    var $li = $list,
         $percent = $li.find('.progress span');
 
     // 避免重复创建
@@ -78,7 +79,7 @@ uploader.on( 'uploadSuccess', function( file, res ) {
 
 // 文件上传失败，显示上传出错。
 uploader.on( 'uploadError', function( file ) {
-    var $li = $( '#'+file.id ),
+    var $li = $list,
         $error = $li.find('div.error');
 
     // 避免重复创建
@@ -91,5 +92,16 @@ uploader.on( 'uploadError', function( file ) {
 
 // 完成上传完了，成功或者失败，先删除进度条。
 uploader.on( 'uploadComplete', function( file ) {
-    $( '#'+file.id ).find('.progress').remove();
+    $list.find('.progress').remove();
+});
+
+uploader.on("error",function (type){
+    if(type == "F_DUPLICATE"){
+        alert("请不要重复选择文件！");
+    }else if(type == "Q_EXCEED_SIZE_LIMIT"){
+        alert("系统提示","<span class='C6'>所选附件总大小</span>不可超过<span class='C6'>" + 2 + "M</span>哦！<br>换个小点的文件吧！");
+    } else if(type == "Q_TYPE_DENIED") {
+        alert('请选择图片格式');
+    }
+
 });
