@@ -63,7 +63,7 @@ fileuploader.on("error",function (type){
     if(type == "F_DUPLICATE"){
         alert("请不要重复选择文件！");
     }else if(type == "Q_EXCEED_SIZE_LIMIT"){
-        alert("系统提示","<span class='C6'>所选附件总大小</span>不可超过<span class='C6'>" + 5 + "M</span>哦！<br>换个小点的文件吧！");
+        alert("系统提示" + "<span class='C6'>所选附件总大小</span>不可超过<span class='C6'>" + 5 + "M</span>哦！<br>换个小点的文件吧！");
     } else if(type == "Q_TYPE_DENIED") {
         alert('请选择mp3后缀的音乐格式');
     }
