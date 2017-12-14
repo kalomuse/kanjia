@@ -259,6 +259,16 @@
 			</div>
 	</div>
 </div>
+{if $product.bg_music}
+<audio id="myAudio" src="{$product.bg_music}" autoplay="autoplay" preload="" loop="loop"></audio>
+<script type="text/javascript">
+    var audio = document.getElementById('myAudio');
+    audio.play();
+    document.addEventListener("WeixinJSBridgeReady", function () {
+        audio.play();
+    }, false);
+</script>
+{/if}
 {if !$is_admin}
 {include file="/wx_share" /}
 {/if}
