@@ -24,6 +24,13 @@ class Index extends Base
                 $product['pic'] = explode(',', $product['pic']);
 
                 $shop = M('user')->where('id', $product['uid'])->find();
+                //判断当前用户是否已加入砍价
+                $has_join = $prodct_service->has_join($id, $this->uid);
+                if(!I('hisuid', 0) && $has_join) {
+                    $_GET['hisuid'] = $this->uid;
+                    $hisuid = $this->uid;
+                }
+                
                 $his = M('user')->where('id', $hisuid)->find();
 
                 //倒计时
@@ -37,8 +44,6 @@ class Index extends Base
                 );
                 $low_order = M('orders')->where($query)->select();
 
-                //判断当前用户是否已加入砍价
-                $has_join = $prodct_service->has_join($id, $this->uid);
 
                 //判断当前用户是否已砍价
                 $is_kan = $prodct_service->has_kan($id, $this->uid, $hisuid);
@@ -77,9 +82,7 @@ class Index extends Base
                 $msg = $prodct_service->check($left, $product, $expire);
                 //商家图片
                 $shop['pic'] = explode(',', $shop['pic']);
-                if(!I('hisuid', 0) && $has_join) {
-                    $_GET['hisuid'] = $this->uid;
-                }
+
 
                 $this->assign('msg', $msg);
                 $this->assign('endtime', $endtime);
