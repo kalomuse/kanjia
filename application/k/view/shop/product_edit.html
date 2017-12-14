@@ -151,6 +151,18 @@
 				<textarea class="txt-border txtarea rule">{$product.rule}</textarea>
 			</div>
 		</div>
+		<div class="fn-clear  item">
+			<label class="tit">请上传背景音乐:</label>
+			<div class="input-wrap">
+				<div id="uploader" class="wu-example">
+					<!--用来存放文件信息-->
+					<div id="thelist" class="file-list">{$product.bg_music}</div>
+					<div class="btns">
+						<div id="picker">选择文件</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="fn-clear btn-wrap">
 			<input type="button" value="提交" class="btn" onclick="submit({$product.id})"/>
 		</div>
@@ -165,8 +177,10 @@
 </body>
 <script src="/public/js/jquery.min.js"></script>
 <script src="/public/js/webuploader/webuploader.min.js"></script>
+<script src="/public/js/webuploader/fileUpload-demo.js?v=5"></script>
 <script src="/public/js/webuploader/webuploader-demo.js?v=6"></script>
 <script>
+    bg_music = '{$product.bg_music}';
     first_pic = "{$product.first_pic}";
     pic = "{$product.pic_str}";
     img_type = '';
@@ -204,6 +218,7 @@
             desc: $('.desc').val(),
             first_pic: first_pic,
             pic: pic,
+			bg_music: bg_music
 
         }
         $.post('/k/shop/product_edit?id=' + id, data, function(res) {

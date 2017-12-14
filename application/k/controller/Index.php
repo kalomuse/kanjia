@@ -77,6 +77,9 @@ class Index extends Base
                 $msg = $prodct_service->check($left, $product, $expire);
                 //商家图片
                 $shop['pic'] = explode(',', $shop['pic']);
+                if(!I('hisuid', 0) && $has_join) {
+                    $_GET['hisuid'] = $this->uid;
+                }
 
                 $this->assign('msg', $msg);
                 $this->assign('endtime', $endtime);
