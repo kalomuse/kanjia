@@ -46,6 +46,10 @@ class Upload extends Controller
                 'path' => $file_path,
                 'type' => 'pic'
             )));
+        } else {
+            exit(json_encode(array(
+                'msg' => '格式错误，请添加后缀为mp3格式，该格式为{$file_ext}'
+            )));
         }
     }
 }

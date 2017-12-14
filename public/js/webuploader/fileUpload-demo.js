@@ -42,9 +42,12 @@ fileuploader.on( 'uploadProgress', function( file, percentage ) {
 });
 
 fileuploader.on( 'uploadSuccess', function( file, res ) {
-    $file_li.find('p.state').text('上传完毕');
     if(res && res.path) {
+        $file_li.find('p.state').text('上传完毕');
         bg_music = res.path;
+    } else {
+        $file_li.find('p.state').text('');
+        alert(res.msg);
     }
 });
 
