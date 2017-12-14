@@ -48,7 +48,7 @@ class Upload extends Controller
             )));
         } else {
             exit(json_encode(array(
-                'msg' => '格式错误，请添加后缀为mp3格式，该格式为{$file_ext}'
+                'msg' => "格式错误，请添加后缀为mp3格式，该格式为{$file_ext}"
             )));
         }
     }
