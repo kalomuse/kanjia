@@ -6,6 +6,7 @@
 <title>活动列表</title>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont/iconfont.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="/public/js/webuploader/webuploader.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/application.css"/>
 <script src="/public/js/jquery.min.js"></script>
 	<script src="/public/js/layer/layer.js" ></script>
@@ -68,6 +69,14 @@
 	</style>
 </head>
 <body>
+<audio id="myAudio" src="/public/music/bbb.mp3" autoplay="autoplay" preload="" loop="loop"></audio>
+<script type="text/javascript">
+    var audio = document.getElementById('myAudio');
+    audio.play();
+    document.addEventListener("WeixinJSBridgeReady", function () {
+        audio.play();
+    }, false);
+</script>
 	<section class="activityedit">
 		<div class="activityedit-wrap">
 				<div class="fn-clear item">
@@ -144,6 +153,19 @@
 					</div>
 				</div>
 
+			<div class="fn-clear">
+				<label class="tit">请上传背景音乐:</label>
+				<div class="input-wrap">
+					<div id="uploader" class="wu-example">
+						<!--用来存放文件信息-->
+						<div id="thelist" class="uploader-list"></div>
+						<div class="btns">
+							<div id="picker">选择文件</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 				<div class="fn-clear btn-wrap">
 					<input type="button" value="提交" class="btn" onclick="submit();"/>
 				</div>
@@ -158,9 +180,11 @@
 </body>
 <script src="/public/js/jquery.min.js"></script>
 <script src="/public/js/webuploader/webuploader.min.js"></script>
+<script src="/public/js/webuploader/fileUpload-demo.js?v=4"></script>
 <script src="/public/js/webuploader/webuploader-demo.js?v=10"></script>
-<script>
 
+<script>
+    bg_music = '';
     first_pic = '';
     pic = '';
     img_type = '';
@@ -179,7 +203,7 @@
         img_type = type;
         $list = $(self).parent();
         uploader.option('server', url);
-        $('.webuploader-element-invisible').click();
+        $('#filePicker .webuploader-element-invisible').click();
     }
     function submit() {
         var data = {
@@ -194,7 +218,8 @@
             end_time: $('.end_time').val(),
             desc: $('.desc').val(),
 			first_pic: first_pic,
-			pic: pic
+			pic: pic,
+            bg_music: bg_music
         }
         $.post('/k/shop/product_new', data, function(res) {
             if(res.status == 'ok') {

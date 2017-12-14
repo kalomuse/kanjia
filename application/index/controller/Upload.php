@@ -30,4 +30,22 @@ class Upload extends Controller
             }
         }
     }
+    public function file()
+    {
+        Session::start();
+        $file = request()->file('file');
+        $file_name = $file->getInfo()['name'];
+        $name = explode('.', $file_name);
+        $file_ext = $name[count($name)-1];
+        if ($file && $file_ext == 'mp3') {
+            $base_path = '/public/music/';
+            $info = $file->move(ROOT_PATH . $base_path);
+            $file_path = $base_path . $info->getSaveName();
+            Header('Content-type:application/json; charset=UTF-8');
+            exit(json_encode(array(
+                'path' => $file_path,
+                'type' => 'pic'
+            )));
+        }
+    }
 }

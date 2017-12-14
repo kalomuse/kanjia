@@ -124,6 +124,7 @@ class Index extends Base
             'end_time' => array('gt', date('Y-m-d'))
         );
         $products = M('product')->where($query)->select();
+
         $this->assign('products', $products);
         $this->assign('noshare', 1);
         $this->assign('page_type', 'all_activity');

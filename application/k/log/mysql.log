@@ -113,6 +113,7 @@ CREATE TABLE `orders` (
     `rule` text not null  COMMENT '规则',
     `first_pic` varchar(128) not null  COMMENT '头图',
     `pic` text not null  COMMENT '商品列表',
+    `bg_music` varchar(256) default '' not null  COMMENT '背景音乐',
     `is_pay` int(10) not null default 0   COMMENT '是否付钱',
     `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
     `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
