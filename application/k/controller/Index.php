@@ -283,7 +283,12 @@ class Index extends Base
             'order_amount' => $order['order_amount'] - $kan_price,
             'modified_time' => date("Y-m-d H:i:s")
         );
-        M('orders')->where('user_id', $_POST['hisuid'])->update($set);
+        $query = array(
+            'user_id'=> $_POST['hisuid'],
+            'product_id'=> $_POST['product_id']
+        );
+        M('orders')->where($query)->update($set);
+        
         M('kan')->insert($_POST);
         return $this->ajaxReturn(array(
             'left'=> $order['order_amount'] - $kan_price,
