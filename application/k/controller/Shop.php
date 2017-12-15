@@ -35,14 +35,36 @@ class Shop extends Base
             $err = $validate->getError();
             return $this->ajaxReturn($err);
         }
-        $set = array(
-            'name' => I('name'),
-            'contact' => I('contact'),
-            'address' => I('address'),
-            'pic' => I('pic'),
-            'role' => 'shop',
+
+
+
+        $user = M('user')->where('id', $this->uid)->find();
+        $query = array(
+            'address' => array('like',"%{$user['address']}%"),
         );
-        M('user')->where('openid', $this->session)->update($set);
+        $has = M('user')->where($query)->find();
+        if($user['first_use'] && !$has) {
+            $set = array(
+                'review' => 1,
+                'is_pay' => 1,
+                'expire_time' => 0,
+                'first_use' => 0,
+                'name' => I('name'),
+                'contact' => I('contact'),
+                'address' => I('address'),
+                'pic' => I('pic'),
+                'role' => 'shop',
+            );
+        } else {
+            $set = array(
+                'name' => I('name'),
+                'contact' => I('contact'),
+                'address' => I('address'),
+                'pic' => I('pic'),
+                'role' => 'shop',
+            );
+        }
+        M('user')->where('id', $this->uid)->update($set);
         return $this->ajaxReturn(array(
             'status' =>  'ok'
         ));
@@ -74,6 +96,7 @@ class Shop extends Base
             ));
         }
     }
+
     //删除商品图片
     public function delimg() {
         $img = I('src');
