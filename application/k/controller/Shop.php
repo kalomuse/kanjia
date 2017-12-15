@@ -10,6 +10,7 @@ class Shop extends Base
         $user = M('user')->where('id', $this->uid)->find();
         $this->expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
         $this->is_pay = $user['is_pay'];
+        $this->uesr = $user;
         $this->assign('is_pay', $this->is_pay);
         $this->assign('expire', $this->expire);
     }
@@ -44,7 +45,6 @@ class Shop extends Base
         $has = M('user')->where($query)->find();
         if($user['first_use'] && !$has) {
             $set = array(
-                'review' => 1,
                 'is_pay' => 1,
                 'expire_time' => 0,
                 'first_use' => 0,
@@ -67,6 +67,23 @@ class Shop extends Base
         return $this->ajaxReturn(array(
             'status' =>  'ok'
         ));
+    }
+
+    public function complete() {
+        if($this->is_pay && ($this->uesr['review'] == 0 || $this->uesr['review'] == 3)) {
+            $set = array(
+                'review' => 1,
+            );
+            M('user')->where('id', $this->uid)->update($set);
+            return $this->ajaxReturn(array(
+                'status' =>  'ok',
+                'msg' => '本次活动已提交审核，请耐心等待，审核通过后即可报名参与'
+            ));
+        }
+        return $this->ajaxReturn(array(
+            'status' =>  'ok',
+        ));
+
     }
 
     public function center()
@@ -163,6 +180,13 @@ class Shop extends Base
         $id = I('id');
         $_POST['uid'] = $this->uid;
         M('product')->where('id', $id)->update($_POST);
+
+        if($this->is_pay &&  $this->uesr['review'] == 3) {
+            $set = array(
+                'review' => 1,
+            );
+            M('user')->where('id', $this->uid)->update($set);
+        }
         return $this->ajaxReturn(array(
             'status' =>  'ok'
         ));

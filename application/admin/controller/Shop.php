@@ -55,6 +55,7 @@ class Shop extends Base
     {
         $query = array(
             'is_pay' => 1,
+            'review' => 1,
         );
         $data = $this->tableService->query($query);
         return $this->ajaxReturn($data);

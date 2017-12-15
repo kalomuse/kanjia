@@ -229,7 +229,12 @@
 					{else}
 					,btn: ['返回商品列表', '继续添加']
 						,yes: function(){
-						location.href = '/k/shop/product_list';
+						$.post('/k/shop/complete', {}, function(res) {
+						    if(res.msg) {
+						        alert(res.msg);
+							}
+                            location.href = '/k/shop/product_list';
+						});
 					}
 					{/if}
                     ,no: function() {

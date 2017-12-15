@@ -212,9 +212,22 @@ class Index extends Base
     }
 
     public function join() {
+        $id = I('product_id', 0);
+        $user = M('user')->where('id',  $this->uid)->find();
+        $prodct_service = new ProdctService();
+        $product = M('product')->where('id', $id)->find();
+
+        $count = $prodct_service->sale_count($id);
+        $left = $product['number'] - $count;
+        $expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
+        $msg = $prodct_service->check($left, $product, $expire);
+        if($msg) {
+            $this->ajaxReturn($msg);
+        }
+
         $t = time();
         $rand = rand(1000, 9999);
-        $product = M('product')->where('id', I('product_id', 0))->find();
+
         if($product) {
             $set = array(
                 'type'=> 101,
