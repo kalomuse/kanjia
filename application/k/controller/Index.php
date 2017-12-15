@@ -125,7 +125,21 @@ class Index extends Base
     }
 
     public function all_activity() {
+        //获取审核通过的用户列表
         $query = array(
+            'is_pay'=> 1,
+            'review'=> 2,
+            'expire_time' => array('gt', time())
+        );
+        $ulist = M('user')->where($query)->select();
+        $temp = array();
+        foreach($ulist as $u) {
+            $temp[] = $u['id'];
+        }
+
+        //获取所有活动列表
+        $query = array(
+            'uid'=> array('in', implode(',', $temp)),
             'deleted' => 0,
             'end_time' => array('gt', date('Y-m-d'))
         );
