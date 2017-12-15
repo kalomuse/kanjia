@@ -221,7 +221,7 @@
             if(res.status == 'ok') {
                 layer.open({
                     content: '是否继续添加多个商品？'
-					{if $expire}
+					{if $expire && !$is_pay}
                     ,btn: ['立即付款', '继续添加']
                     ,yes: function(){
                     	location.href = '/k/shop/tip';
