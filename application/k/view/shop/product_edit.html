@@ -179,7 +179,31 @@
 <script src="/public/js/webuploader/webuploader.min.js"></script>
 <script src="/public/js/webuploader/fileUpload-demo.js?v=5"></script>
 <script src="/public/js/webuploader/webuploader-demo.js?v=6"></script>
+<link rel="stylesheet" type="text/css"  href="/public/js/mobiscroll/mobiscroll.min.css">
+<script src="/public/js/mobiscroll/mobiscroll.min.js"></script>
 <script>
+    $(function(){
+        $(".start_time").mobiscroll().date({
+            theme: "material",
+            lang: "zh",
+            display:'bottom',
+            dateFormat: 'yyyy-mm-dd',
+            headerText: '请选择活动开始时间',
+            onSelect: function (valueText, inst) {
+                $(this).find(".mbase-menu-txt").html(valueText);
+            }
+        });
+        $(".end_time").mobiscroll().date({
+            theme: "material",
+            lang: "zh",
+            display:'bottom',
+            dateFormat: 'yyyy-mm-dd',
+            headerText: '请选择活动结束时间',
+            onSelect: function (valueText, inst) {
+                $(this).find(".mbase-menu-txt").html(valueText);
+            }
+        });
+    });
     bg_music = '{$product.bg_music}';
     first_pic = "{$product.first_pic}";
     pic = "{$product.pic_str}";
