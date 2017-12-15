@@ -56,7 +56,14 @@
     .follow_qrcode {
         z-index: 100000;
     }
-
+    .status{
+        background: white;
+        padding: 10px 0px 5px 10px;
+    }
+    .status p{
+        color: #333;
+        font-size: 12px;
+    }
 
 </style></head>
 
@@ -74,6 +81,23 @@
 </header>
 
 <main>
+    <div class="status">
+    {if $review == 0}
+        <p>审核状态：未提交审核</p>
+    {/if}
+    {if $review == 1}
+        <p>审核状态：<span style="color:purple;">审核中，请耐心等待</span></p>
+    {/if}
+    {if $review == 2}
+        <p>审核状态：<span style="color:green;">已通过</span></p>
+    {/if}
+    {if $review == 3}
+        <p>审核状态：<span style="color:red;">未通过</span></p>
+        <p>原因：<span style="color:red;">{$reason}</span></p>
+
+    {/if}
+    </div>
+
     <div class="seckill-user-list">
         <ul>
             <li>

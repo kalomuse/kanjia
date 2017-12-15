@@ -92,6 +92,8 @@ class Shop extends Base
         $head = explode('||', $user['file'])[0];
         $this->assign('role', $user['role']);
         $this->assign('head', $head);
+        $this->assign('review', $user['review']);
+        $this->assign('reason', $user['reason']);
         return $this->fetch();
     }
     public function product_new() {
