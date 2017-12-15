@@ -36,11 +36,10 @@ class Shop extends Base
             return $this->ajaxReturn($err);
         }
 
-
-
+        $address = I('address');
         $user = M('user')->where('id', $this->uid)->find();
         $query = array(
-            'address' => array('like',"%{$user['address']}%"),
+            'address' => array('like',"%{$address}%"),
         );
         $has = M('user')->where($query)->find();
         if($user['first_use'] && !$has) {
@@ -51,7 +50,7 @@ class Shop extends Base
                 'first_use' => 0,
                 'name' => I('name'),
                 'contact' => I('contact'),
-                'address' => I('address'),
+                'address' => $address,
                 'pic' => I('pic'),
                 'role' => 'shop',
             );
@@ -59,7 +58,7 @@ class Shop extends Base
             $set = array(
                 'name' => I('name'),
                 'contact' => I('contact'),
-                'address' => I('address'),
+                'address' => $address,
                 'pic' => I('pic'),
                 'role' => 'shop',
             );
