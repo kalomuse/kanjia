@@ -225,9 +225,10 @@ class Index extends Base
 
     public function join() {
         $id = I('product_id', 0);
-        $user = M('user')->where('id',  $this->uid)->find();
+
         $prodct_service = new ProdctService();
         $product = M('product')->where('id', $id)->find();
+        $user = M('user')->where('id',  $product['shop_id'])->find();
 
         $count = $prodct_service->sale_count($id);
         $left = $product['number'] - $count;
