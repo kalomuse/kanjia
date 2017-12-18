@@ -195,8 +195,9 @@ class Index extends Base
         }
 
         //
-        $first_product = $products[0];
-        if($first_product) {
+
+        if(isset($products[0])) {
+            $first_product = $products[0];
             $this->assign('bg_music', $first_product['bg_music']);
             $this->assign('first_img', $first_product['first_pic']);
         }
