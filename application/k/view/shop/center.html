@@ -81,6 +81,7 @@
 </header>
 
 <main>
+    {if $role == 'shop'}
     <div class="status">
     {if $review == 0}
         <p>审核状态：未提交审核</p>
@@ -97,6 +98,7 @@
 
     {/if}
     </div>
+    {/if}
 
     <div class="seckill-user-list">
         <ul>
