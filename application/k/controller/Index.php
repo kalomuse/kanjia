@@ -228,7 +228,7 @@ class Index extends Base
 
         $prodct_service = new ProdctService();
         $product = M('product')->where('id', $id)->find();
-        $user = M('user')->where('id',  $product['shop_id'])->find();
+        $user = M('user')->where('id',  $product['uid'])->find();
 
         $count = $prodct_service->sale_count($id);
         $left = $product['number'] - $count;
