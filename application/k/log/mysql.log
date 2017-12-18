@@ -135,6 +135,21 @@ CREATE TABLE `orders` (
         `deleted` int(4) unsigned DEFAULT '0',
         primary key(id)) DEFAULT CHARSET=utf8;
 
+    //提现表
+    CREATE TABLE `withdrawals` (
+        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+        `money` decimal(10,2) not null default 0 COMMENT '提现金额',
+        `user_id` int(10)  not null COMMENT '用户id',
+        `user_name` varchar(64)  not null COMMENT '店铺名称',
+        `order_time` int(10)  not null COMMENT '订单截止时间',
+        `order_list` text not null  COMMENT '转账涉及到的订单列表',
+        `is_pay` int(3) not null default 0 COMMENT '是否已转账',
+
+        `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+        `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+        `deleted` int(4) unsigned DEFAULT '0',
+        primary key(id)) DEFAULT CHARSET=utf8;
+
 
 
 

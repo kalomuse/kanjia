@@ -29,24 +29,13 @@
 
         var config = [
             {'str': '订单号', 'name': 'order_id', 'align':'center'},
-            {'str': '收支', 'name': 'is_get', 'align':'center',formatter: function (data) {
-                if(data == 0) {
-                    return '支出';
-                } else if(data == 1){
-                    return '收入';
-                }
+            {'str': '付款金额', 'name': 'userid', 'align':'center', width:80},
+            {'str': '联系人手机', 'name': 'mobile', 'align':'center', width:80},
+            {'str': '联系人姓名', 'name': 'name', 'align':'center', width:80},
+            {'str': '操作', 'name': 'userid', 'align':'center', formatter: function (data) {
+                return "<a>详情</a>"
 
-            }},
-            {'str': '商家id', 'name': 'userid', 'align':'center', width:80},
-            {'str': '金额', 'name': 'amount', 'align':'center'},
-            {'str': '类型', 'name': 'type', 'align':'center',formatter: function (data) {
-                if(data == 1) {
-                    return '店铺活动收入';
-                } else if(data == 101) {
-                    return '商家商品金额代收';
-                }
-
-            }},
+            }}
         ];
         var params = {
             },

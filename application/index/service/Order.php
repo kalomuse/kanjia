@@ -13,7 +13,7 @@ class Order
         $set = array(
             'pay_time'=> time(),
             'pay_status' => 1,
-            'total_amount' => $order['total_fee'] / 100,
+            //'order_amount' => $order['total_fee'] / 100,
             'transaction_id' => $order['transaction_id'],
         );
         $query = array(
@@ -33,6 +33,16 @@ class Order
             );
             M('user')->where($query)->update($set);
         }
-
+        //记录账单
+        $set = array(
+            'is_get'=> 1,
+            'type'=> $order['type'],
+            'amount'=> $order['order_amount'],
+            'order_id'=> $order['transaction_id'],
+            'userid'=> $order['user_id'],
+            'has_pay'=> 0
+        );
+        //插入账单
+        M('bill')->insert($set);
     }
 }

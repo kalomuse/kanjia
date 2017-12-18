@@ -21,6 +21,9 @@ class Bill extends Base
         return $this->fetch();
     }
 
+    public function withdrawals() {
+        return $this->fetch();
+    }
     public function order() {
         return $this->fetch();
     }

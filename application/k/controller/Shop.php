@@ -15,7 +15,59 @@ class Shop extends Base
         $this->assign('expire', $this->expire);
     }
     public function pack() {
+        $query = array(
+            'shop_id' => $this->uid,
+            'type' => 101,
+            'pay_status'=> 1
+        );
+        $money = M('orders')->where($query)->sum('order_amount');
+        $withdrawals = M('withdrawals')->where('user_id', $this->uid)->select();
+        $this->assign('withdrawals', $withdrawals);
+        $this->assign('time', time());
+        $this->assign('money', $money?$money:0);
+
         return $this->fetch();
+    }
+
+    public function withdrawals() {
+        $query = array(
+            'shop_id' => $this->uid,
+            'type' => 101,
+            'pay_status'=> 1,
+            'created_time'=> array('lt', date('Y-m-d', I('time')))
+        );
+        $money = M('orders')->where($query)->sum('order_amount');
+        if(IS_GET) {
+            $this->assign('time', time());
+            $this->assign('money', $money?$money:0);
+            return $this->fetch();
+        }
+        $query = array(
+            'user_id' => $this->uid,
+            'is_pay' => 0
+        );
+        if(M('withdrawals')->where($query)->find()) {
+            return $this->ajaxReturn(array(
+                'status' =>  'err',
+                'msg' => '您的提现申请已经提交过啦，请耐心等待'
+            ));
+        }
+        $orders = M('orders')->where($query)->select();
+        $id_list = array();
+        foreach ($orders as $o) {
+            $id_list[] = $o['id'];
+        }
+        $set = array(
+            'user_id'=> $this->uid,
+            'user_name'=> $_SESSION['user']['name'],
+            'order_list'=> count($id_list)?implode(',',$id_list): '',
+            'money'=> $money,
+            'order_time'=> I('time'),
+        );
+        M('withdrawals')->insert($set);
+        return $this->ajaxReturn(array(
+            'status' =>  'ok',
+        ));
     }
 
     public function Join()
@@ -199,6 +251,9 @@ class Shop extends Base
             'uid' => $this->uid,
             'deleted' => 0,
         );
+        $first_product = M('product')->where('uid', $this->uid)->find();
+        $this->assign('bg_music', $first_product['bg_music']);
+        $this->assign('first_img', $first_product['first_pic']);
         $products = M('product')->where($query)->select();
         $this->assign('product', $products);
 
