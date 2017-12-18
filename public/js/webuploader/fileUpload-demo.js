@@ -4,7 +4,6 @@ var fileuploader = WebUploader.create({
     server: '/index/upload/file',
     // swf文件路径
     swf: '/public/js/plugins/webuploader/Uploader.swf',
-    fileSizeLimit: 5*1024*1024,
 
     // 选择文件的按钮。可选。
     // 内部根据当前运行是创建，可能是input元素，也可能是flash.

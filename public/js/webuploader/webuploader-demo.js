@@ -4,7 +4,6 @@ var uploader = WebUploader.create({
 
     // 选完文件后，是否自动上传。
     auto: true,
-    fileSizeLimit: 2*1024*1024,
 
     // swf文件路径
     swf: '/public/js/webuploader/webuploader/Uploader.swf',
