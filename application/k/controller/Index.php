@@ -194,6 +194,18 @@ class Index extends Base
             $this->assign('products', $products);
         }
 
+        //
+        $first_product = $products[0];
+        if($first_product) {
+            $this->assign('bg_music', $first_product['bg_music']);
+            $this->assign('first_img', $first_product['first_pic']);
+        }
+
+        $shop = M('user')->where('id', $shop_id)->find();
+        $shop['pic'] = explode(',', $shop['pic']);
+        $this->assign('shop', $shop);
+
+
         $this->assign('page_type', 'lists');
         $this->assign('noshare', 0);
         $user = M('user')->where('id', $shop_id)->find();

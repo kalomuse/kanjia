@@ -46,9 +46,11 @@
 </style>
 <body>
 <div class="top">
-	<a onclick="pause(this)">静音</a>
+	<a onclick="pause(this)" flag="1">静音</a>
 </div>
+{if isset($first_img) and $first_img}
 <img src="{$first_img}" style="width: 100%">
+{/if}
 	<section>
 		<ul class="activity-list">
 			{foreach $product as $p}
@@ -77,11 +79,26 @@
 				</div>
 			</li>
 			{/foreach}
+			<!--商家介绍 start-->
+			<div class="content-wrap">
+				<h3 class="content-tit">商家介绍</h3>
+				<div class="business-info">
+					<p>店名：{$shop.name}</p>
+					<p>地址：{$shop.address}</p>
+					<p>电话：{$shop.contact}</p>
+					<div style="height:20px;"></div>
+					{foreach $shop.pic as $pic}
+					{if $pic}
+					<img src="{$pic}">
+					{/if}
+					{/foreach}
+				</div>
+			</div>
 		</ul>
 	</section>
 	{include file="/wx_share" /}
 </body>
-{if $bg_music}
+{if isset($bg_music) and $bg_music}
 <audio id="myAudio" src="{$bg_music}" autoplay="autoplay" preload="" loop="loop"></audio>
 <script type="text/javascript">
     var audio = document.getElementById('myAudio');

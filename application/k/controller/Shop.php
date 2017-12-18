@@ -249,16 +249,25 @@ class Shop extends Base
     {
         $query = array(
             'uid' => $this->uid,
-            'deleted' => 0,
+            'deleted'=> 0
         );
-        $first_product = M('product')->where('uid', $this->uid)->find();
-        $this->assign('bg_music', $first_product['bg_music']);
-        $this->assign('first_img', $first_product['first_pic']);
+        $first_product = M('product')->where($query)->find();
+        if($first_product) {
+            $this->assign('bg_music', $first_product['bg_music']);
+            $this->assign('first_img', $first_product['first_pic']);
+        }
+
+        $shop = M('user')->where('id', $this->uid)->find();
+        $shop['pic'] = explode(',', $shop['pic']);
+        $this->assign('shop', $shop);
+
         $products = M('product')->where($query)->select();
         $this->assign('product', $products);
 
         //微信分享赋值
         $user = M('user')->where('id', $this->uid)->find();
+
+
         $website = $this->get_website();
         $this->signPackage['img'] = $products? $products[0]['first_pic'] : ($website . $user['file']);
         $this->signPackage['link'] = $website . "/k/index/lists?shop_id=$this->uid";
