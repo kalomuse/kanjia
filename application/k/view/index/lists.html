@@ -95,10 +95,13 @@
                             <p class="p02">原价：<i>{$p.old_price}元</i></p>
                             <p class="p02">底价：<i>{$p.low_price}元</i></p>
                             <p class="p02">现价：<i style="color:red;">{$p.cur_price}元</i></p>
+                        </div>
                             {else}
+
                             <p class="p01">{$p.count}人参与</i></p>
                             <p class="p02">售价：<i>{$p.old_price}元</i></p>
                             <p class="p03">底价：{$p.low_price}元</p>
+                        </div>
                                 {if $page_type eq 'my_activity'}
                                 <a class="btn" href="/k?id={$p.id}&hisuid={$uid}">
                                 {else}
