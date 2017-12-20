@@ -91,16 +91,22 @@
                     <div class="tit">{$p.title}</div>
                     <div class="info">
                         <div class="fl">
+                            {if $page_type eq 'my_activity'}
+                            <p class="p02">原价：<i>{$p.old_price}元</i></p>
+                            <p class="p02">底价：<i>{$p.low_price}元</i></p>
+                            <p class="p02">现价：<i style="color:red;">{$p.cur_price}元</i></p>
+                            {else}
                             <p class="p01">{$p.count}人参与</i></p>
                             <p class="p02">售价：<i>{$p.old_price}元</i></p>
-                            <p class="p03">低价：{$p.low_price}元</p>
+                            <p class="p03">底价：{$p.low_price}元</p>
+                                {if $page_type eq 'my_activity'}
+                                <a class="btn" href="/k?id={$p.id}&hisuid={$uid}">
+                                {else}
+                                <a class="btn" href="/k?id={$p.id}">
+                                {/if}
+                                </i>我要参与</a>
+                            {/if}
                         </div>
-                        {if $page_type eq 'my_activity'}
-                        <a class="btn" href="/k?id={$p.id}&hisuid={$uid}">
-                        {else}
-                        <a class="btn" href="/k?id={$p.id}">
-                        {/if}
-                        </i>我要参与</a>
                     </div>
                 </div>
             </a>

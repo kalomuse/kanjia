@@ -136,6 +136,8 @@ class Index extends Base
         foreach($ulist as $u) {
             $temp[] = $u['id'];
         }
+        $prodct_service = new ProdctService();
+        $is_end = 0;
 
         //获取所有活动列表
         $query = array(
@@ -145,9 +147,21 @@ class Index extends Base
         );
         $products = M('product')->where($query)->select();
         foreach($products as &$p) {
+            //当前已售出的商品数量
+            $count = $prodct_service->sale_count($p['id']);
+            $left = $p['number'] - $count;
+            //总砍价人数统计
+            $query = array(
+                'product_id' => $p['id']
+            );
+            $p['count'] = M('kan')->where($query)->count() * 31.7 + 13;
+            if(strtotime($p['end_time']) < time() || $left <= 0) {
+                $is_end = 1;
+            }
             $p['pic'] = explode(',', $p['pic']);
         }
 
+        $this->assign('is_end', $is_end);
         $this->assign('products', $products);
         $this->assign('noshare', 1);
         $this->assign('page_type', 'all_activity');
@@ -157,10 +171,17 @@ class Index extends Base
 
     public function my_activity() {
         $order = M('orders')->where('user_id', $this->uid)->select();
+        $prodct_service = new ProdctService();
+        $is_end = 0;
         $pids = [];
+        $i = 0;
+        $op_map = array();
         foreach($order as $o) {
-            if($o['product_id'])
+            if($o['product_id']) {
                 $pids[] = $o['product_id'];
+                $op_map[$o['product_id']] = $i;
+            }
+            $i++;
         }
         $query = array(
             'deleted' => 0,
@@ -169,8 +190,21 @@ class Index extends Base
         );
         $products = M('product')->where($query)->select();
         foreach($products as &$p) {
+            $p['cur_price'] = $order[$op_map[$p['id']]]['order_amount'];
+            //当前已售出的商品数量
+            $count = $prodct_service->sale_count($p['id']);
+            $left = $p['number'] - $count;
+            //总砍价人数统计
+            $query = array(
+                'product_id' => $p['id']
+            );
+            $p['count'] = M('kan')->where($query)->count() * 31.7 + 13;
+            if(strtotime($p['end_time']) < time() || $left <= 0) {
+                $is_end = 1;
+            }
             $p['pic'] = explode(',', $p['pic']);
         }
+        $this->assign('is_end', $is_end);
         $this->assign('products', $products);
         $this->assign('noshare', 1);
         $this->assign('uid', $_SESSION['uid']);
@@ -211,8 +245,6 @@ class Index extends Base
                 if(strtotime($p['end_time']) < time() || $left <= 0) {
                     $is_end = 1;
                 }
-            }
-            foreach($products as &$p) {
                 $p['pic'] = explode(',', $p['pic']);
             }
             $this->assign('is_end', $is_end);
