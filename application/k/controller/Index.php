@@ -241,7 +241,7 @@ class Index extends Base
                 $query = array(
                     'product_id' => $p['id']
                 );
-                $p['count'] = M('kan')->where($query)->count() * 31.7 + 13;
+                $p['count'] = intval(M('kan')->where($query)->count() * 31.7 + 13);
                 if(strtotime($p['end_time']) < time() || $left <= 0) {
                     $is_end = 1;
                 }
