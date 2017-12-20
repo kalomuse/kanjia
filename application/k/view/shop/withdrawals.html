@@ -11,55 +11,10 @@
         li {
             position: relative;
         }
-        .close:focus, .close:hover {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-            filter: alpha(opacity=50);
-            opacity: .5;
-        }
-        button.close {
-            -webkit-appearance: none;
-            padding: 0;
-            cursor: pointer;
-            background: 0 0;
-            border: 0;
-        }
-        .close {
-            color: red;
-            z-index: 999;
-            position: absolute;
-            right: 5px;
-            font-size: 21px;
-            font-weight: 700;
-            line-height: 1;
-            text-shadow: 0 1px 0 #fff;
-            filter: alpha(opacity=20);
-            opacity: .7;
-        }
-        .add-photo-wrap li {
-            display: inline-block;
-            width: 31%;
-            margin: 3px 0.5%;
-            padding-bottom: 31%;
-            overflow: hidden;
-            border-radius: 5px;
-            position: relative;
-        }
-        .add-photo-wrap li a {
+        .input-wrap input {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            border-radius: 5px;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-        .add-photo-wrap li a img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -74,9 +29,15 @@
             </div>
         </div>
         <div class="item">
-            <label>微信账号</label>
+            <label>银行名称</label>
             <div class="input-wrap">
-                <input type="text" value="" placeholder="请输入微信账号" class="name" />
+                <input type="text" value="" placeholder="例如：浦发银行" class="name" />
+            </div>
+        </div>
+        <div class="item">
+            <label>银行账号</label>
+            <div class="input-wrap">
+                <input type="text" value="" placeholder="请输入银行账号" class="name" />
             </div>
         </div>
 
@@ -85,12 +46,6 @@
         </div>
     </div>
 </section>
-<!--用来存放item-->
-<div id="fileList" class="uploader-list" style="display: none;">
-    <div class="file-item " style="position: relative;">
-        <div id="filePicker">选择图片</div>
-    </div>
-</div>
 </body>
 <script src="/public/js/jquery.min.js"></script>
 <script>

@@ -180,10 +180,12 @@ class Index extends Base
 
     public function lists()
     {
+        $is_end = 0;
         $shop_id = I('shop_id', 0);
         $products = [];
         if(!$shop_id)
             exit('店铺不存在');
+        $prodct_service = new ProdctService();
 
         $user = M('user')->where('id',  $shop_id)->find();
         $expire = $user['expire_time'] && $user['expire_time'] > time()? 0: 1;
@@ -198,8 +200,22 @@ class Index extends Base
             );
             $products = M('product')->where($query)->select();
             foreach($products as &$p) {
+                //当前已售出的商品数量
+                $count = $prodct_service->sale_count($p['id']);
+                $left = $p['number'] - $count;
+                //总砍价人数统计
+                $query = array(
+                    'product_id' => $p['id']
+                );
+                $p['count'] = M('kan')->where($query)->count() * 31.7 + 13;
+                if(strtotime($p['end_time']) < time() || $left <= 0) {
+                    $is_end = 1;
+                }
+            }
+            foreach($products as &$p) {
                 $p['pic'] = explode(',', $p['pic']);
             }
+            $this->assign('is_end', $is_end);
             $this->assign('products', $products);
         }
 

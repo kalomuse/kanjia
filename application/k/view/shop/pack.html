@@ -68,7 +68,7 @@
         {foreach $withdrawals as $w}
         <tbody>
         <tr>
-            <td>{$w.order_time | date}</td>
+            <td>{$w.order_time | date="Y-m-d",###}</td>
             <td>{$w.money}</td>
             <td>{$w.is_pay}</td>
         </tr>

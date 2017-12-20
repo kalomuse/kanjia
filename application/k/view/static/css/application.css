@@ -456,7 +456,7 @@ body{
 }
 .join-wrap .item label{
 	float: left;
-	width: 30%;
+	width: 20%;
 	height: 42px;
 	font-size: 18px;
 	color: #111;
@@ -465,7 +465,7 @@ body{
 }
 .join-wrap .item .input-wrap{
 	float: right;
-	width: 65%;
+	width: 75%;
 	height: 42px;
 	margin-right: 3%;
 }
@@ -494,50 +494,101 @@ body{
 /*申请加盟   end*/
 
 /*活动列表   start*/
+.activity-list-bg{
+	width: 100%;
+	min-height: 100%;
+	background: #5f5697;
+}
 .activity-list{
-	padding: 10px 5px;
+	padding: 10px 0;
 }
 .activity-list li{
-	border-top: 1px solid #ddd;
 	padding: 15px 12px;
-}
-.activity-list li:first-child{
-	border-top: 0 none;
+	min-height: 100px;
+	background: url(../images/activity-list-bg.jpg) repeat-x;
+	background-size: auto 100%;
+	margin: 5px 0;
+	position: relative;
 }
 .activity-list li .img{
-	width: 100%;
+	position: absolute;
+	left: 12px;
+	top: 15px;
+	height: 100px;
+	width: 100px;
 }
 .activity-list li .img img{
 	display: block;
 	width: 100%;
+	height: 100%;
+}
+.activity-list li .activity-end:before{
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: url(../images/end.png) no-repeat;
+	background-size: 100% 100%;
+}
+.activity-list li .activity-info{
+	padding-left: 110px;
+	height: 100px;
 }
 .activity-list li .tit{
 	font-size: 16px;
 	color: #222;
-	line-height: 22px;
-	padding: 5px 0;
+	line-height: 20px;
+	padding: 0 0 5px 0;
+}
+.activity-list li .activity-info .info{
 }
 .activity-list li .time{
 	font-size: 12px;
 	color: #777;
 	line-height: 18px;
 }
-.activity-list li .info{
-	padding-top: 5px;
-	height: 84px;
-}
 .activity-list li .info .fl{
+	width: 58%;
 	font-size: 13px;
 	line-height: 21px;
 }
-.activity-list li .info .fl .p01 i{
+.activity-list li .info .fl .p01{
 	font-size: 15px;
-	color: #F1621C;
+	color: #db3646;
+	line-height: 22px;
 }
-.activity-list li .info .fl .p03 i{
-	color: #F1621C;
-	padding: 0 2px;
-	text-decoration: underline;
+.activity-list li .info .fl .p02{
+	color: #333;
+	font-size: 14px;
+	line-height: 22px;
+}
+.activity-list li .info .fl .p03{
+	color: #fff;
+	font-size: 15px;
+	line-height: 20px;
+	background: #5f5697;
+	width: 90%;
+	height: 36px;
+	text-align: center;
+	line-height: 36px;
+}
+.activity-list li .info .btn{
+	float: right;
+	background: #352b74;
+	width: 41%;
+	height: 36px;
+	border-radius: 18px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	line-height: 36px;
+	margin-top: 40px;
+}
+.activity-list li .info .btn i{
+	padding-right: 3px;
 }
 .activity-list li .info .btn-wrap{
 	
@@ -551,7 +602,7 @@ body{
 	line-height: 36px;
 	padding: 0 12px;
 }
-.activity-list li .info .btn-wrap .btn{
+.activity-list li .info .btn-wrap .btn:first-child{
 	margin-bottom: 12px;
 	text-align: center;
 }
