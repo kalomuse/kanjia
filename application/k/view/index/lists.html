@@ -71,7 +71,7 @@
             {else}
             <a href="/k?id={$p.id}">
             {/if}
-                <div class="img"><img style="max-height:120px;" src="{$p.first_pic}" /></div>
+                <div class="img"><img style="max-height:120px;" src="{$p.pic[0]}" /></div>
                 <div class="info" id="product{$p.id}">
                     <div class="tit">{$p.title}</div>
                     <div class="time">截止日期：{$p.end_time | substr=0,10}</div>

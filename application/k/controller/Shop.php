@@ -262,6 +262,9 @@ class Shop extends Base
         $this->assign('shop', $shop);
 
         $products = M('product')->where($query)->select();
+        foreach($products as &$p) {
+            $p['pic'] = explode(',', $p['pic']);
+        }
         $this->assign('product', $products);
 
         //微信分享赋值

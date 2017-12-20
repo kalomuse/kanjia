@@ -144,6 +144,9 @@ class Index extends Base
             'end_time' => array('gt', date('Y-m-d'))
         );
         $products = M('product')->where($query)->select();
+        foreach($products as &$p) {
+            $p['pic'] = explode(',', $p['pic']);
+        }
 
         $this->assign('products', $products);
         $this->assign('noshare', 1);
@@ -165,6 +168,9 @@ class Index extends Base
             'id' => array('in', $pids),
         );
         $products = M('product')->where($query)->select();
+        foreach($products as &$p) {
+            $p['pic'] = explode(',', $p['pic']);
+        }
         $this->assign('products', $products);
         $this->assign('noshare', 1);
         $this->assign('uid', $_SESSION['uid']);
@@ -191,6 +197,9 @@ class Index extends Base
                 'deleted' => 0
             );
             $products = M('product')->where($query)->select();
+            foreach($products as &$p) {
+                $p['pic'] = explode(',', $p['pic']);
+            }
             $this->assign('products', $products);
         }
 
@@ -201,6 +210,8 @@ class Index extends Base
             $this->assign('bg_music', $first_product['bg_music']);
             $this->assign('first_img', $first_product['first_pic']);
         }
+
+
 
         $shop = M('user')->where('id', $shop_id)->find();
         $shop['pic'] = explode(',', $shop['pic']);
