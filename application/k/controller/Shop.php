@@ -129,11 +129,12 @@ class Shop extends Base
             M('user')->where('id', $this->uid)->update($set);
             return $this->ajaxReturn(array(
                 'status' =>  'ok',
-                'msg' => '本次活动已提交审核，请耐心等待，审核通过后即可报名参与'
+                'msg' => '本次活动已提交审核，请耐心等待，审核通过后即可发布'
             ));
         }
         return $this->ajaxReturn(array(
             'status' =>  'ok',
+            'msg' => '本次活动已提交审核，请耐心等待，审核通过后即可发布'
         ));
 
     }
