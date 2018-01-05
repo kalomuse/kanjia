@@ -86,7 +86,7 @@
             {else}
             <a href="/k?id={$p.id}">
             {/if}
-                <div class="img activity-end{if $is_end} activity-end{/if}"><!--加activity-end样式显示为已结束活动-->
+                <div class="img {if $is_end} activity-end{/if}"><!--加activity-end样式显示为已结束活动-->
                     <img src="{$p.pic[0]}" />
                 </div>
                 <div class="activity-info">
