@@ -61,10 +61,6 @@ class Jssdk extends Model
      * @return type
      */
     public function getJsApiTicket(){
-        $ticket = S('ticket');
-        if(!empty($ticket))
-            return $ticket;
-
         $access_token = $this->get_access_token();
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={$access_token}&type=jsapi";
         $return = httpRequest($url,'GET');
