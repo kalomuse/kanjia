@@ -87,8 +87,8 @@ class Index extends Base
                 $this->assign('msg', $msg);
                 $this->assign('endtime', $endtime);
                 $this->assign('low_order', $low_order);
-                $this->assign('join_count', $join_count);
-                $this->assign('kan_total_count', $kan_total_count);
+                $this->assign('join_count', intval($join_count));
+                $this->assign('kan_total_count', intval($kan_total_count));
                 $this->assign('kan_count', $kan_count);
                 $this->assign('left', $left);
                 $this->assign('his_name', $his['nickname']);
@@ -154,7 +154,7 @@ class Index extends Base
             $query = array(
                 'product_id' => $p['id']
             );
-            $p['count'] = M('kan')->where($query)->count() * 31.7 + 13;
+            $p['count'] = intval(M('kan')->where($query)->count() * 31.7 + 13);
             if(strtotime($p['end_time']) < time() || $left <= 0) {
                 $is_end = 1;
             }
