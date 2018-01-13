@@ -286,9 +286,16 @@ class Shop extends Base
             $query = array(
                 'shop_id' => $this->uid,
                 'type' => 101,
-                'pay_status'=> 1
+                'pay_status'=> 1,
             );
             $orders = M('orders')->where($query)->select();
+            $query['is_use'] = 1;
+            $use = M('orders')->where($query)->count();
+            $query['is_use'] = 0;
+            $nouse =  M('orders')->where($query)->count();
+
+            $this->assign('use', $use);
+            $this->assign('nouse', $nouse);
             $this->assign('orders', $orders);
             return $this->fetch();
         }

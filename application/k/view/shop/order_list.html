@@ -10,8 +10,8 @@
 </head>
 <body>
 <div>
-	<div style="width: 49%;float: right;">已消费人数：0</div>
-	<div style="float: right;width: 49%;">未消费人数：0</div>
+	<div style="width: 49%;float: right;">确认消费人数：{$use}</div>
+	<div style="float: right;width: 49%;">未消费人数：{$nouse}</div>
 </div>
 <div class="input-group" style="width:100%;margin-top:0px positon:relative">
 	<input type="text" class="form-control"placeholder="请输入手机号" / >
@@ -32,7 +32,7 @@
 		<tr>
 			<td>{$o.name}</td>
 			<td>{$o.mobile}</td>
-			<td></td>
+			<td>{$o.is_use? '已消费': '未消费'}</td>
 		</tr>
 	{/foreach}
 	</tbody>
