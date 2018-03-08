@@ -172,22 +172,6 @@ class Base extends Controller
         return $data;
     }
 
-
-    public function get_access_token()
-    {
-        //判断是否过了缓存期
-        $expire_time = $this->weixin_config['web_expires'];
-        if ($expire_time > time()) {
-            return $this->weixin_config['web_access_token'];
-        }
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->weixin_config[appid]}&secret={$this->weixin_config[appsecret]}";
-        $return = httpRequest($url, 'GET');
-        $return = json_decode($return, 1);
-        $web_expires = time() + 7140; // 提前60秒过期
-        M('wx_user')->where(array('id' => $this->weixin_config['id']))->save(array('web_access_token' => $return['access_token'], 'web_expires' => $web_expires));
-        return $return['access_token'];
-    }
-
     /**
      *
      * 构造获取code的url连接

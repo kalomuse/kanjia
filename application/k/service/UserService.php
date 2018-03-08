@@ -57,10 +57,8 @@ class UserService extends Model
         if(!$openid || !$oauth)
             return array('status'=>-1,'msg'=>'参数有误','result'=>'');
 
-        if(isset($data['unionid']))
-            $user = get_user_info($data['unionid'], 4, $oauth);
-        else
-            $user = get_user_info($openid, 3, $oauth);
+
+        $user = get_user_info($openid, 3, $oauth);
 
         if(!$user){
             //账户不存在 注册一个
