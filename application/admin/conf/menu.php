@@ -7,7 +7,7 @@
  */
 return array(
     array('str'=>'店铺产品审核', 'name'=>'shop', 'icon'=>'fa-desktop', 'child'=>array(
-        array('str'=>'用户列表', 'action'=>'review'),
+        array('str'=>'店铺列表', 'action'=>'review'),
     )),
     array('str'=>'账单管理', 'name'=>'bill', 'icon'=>'fa-desktop', 'child'=>array(
         array('str'=>'查询', 'action'=>'list'),

@@ -11,6 +11,7 @@
       'layout_on'     =>  true,
       'layout_name'   =>  'layout',
      ],
-     'default_controller'     => 'user',
+     'default_controller'     => 'shop',
+     'default_action'         => 'review',
 
   ];
